@@ -8,10 +8,13 @@ Future<void> main() async {
     url: 'https://jwtjcjhnydruksviforg.supabase.co',
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3dGpjamhueWRydWtzdmlmb3JnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkzMDcwNDgsImV4cCI6MjA0NDg4MzA0OH0._rjnD_NE75qodjdMEp-GkpHcgf185mL9sixLmwfk4IA',
+    authOptions: FlutterAuthClientOptions(authFlowType: AuthFlowType.pkce),
   );
 
   runApp(const MyApp());
 }
+
+final supabase = Supabase.instance.client;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -33,7 +36,6 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
   //
-
 
   final String title;
 
