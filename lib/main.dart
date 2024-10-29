@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_movie/core/config/dependency_injection.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -10,6 +11,8 @@ Future<void> main() async {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3dGpjamhueWRydWtzdmlmb3JnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkzMDcwNDgsImV4cCI6MjA0NDg4MzA0OH0._rjnD_NE75qodjdMEp-GkpHcgf185mL9sixLmwfk4IA',
     authOptions: FlutterAuthClientOptions(authFlowType: AuthFlowType.pkce),
   );
+
+  configureDependencies();
 
   runApp(const MyApp());
 }
