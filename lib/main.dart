@@ -34,26 +34,29 @@ class MyMovieApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<auth_bloc.AuthBloc, auth_bloc.AuthState>(
-      listener: (context, state) {
-        if (state is auth_bloc.AuthUserUnauthenticated) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const LoginPage(),
-            ),
-          );
-        }
-        if (state is auth_bloc.AuthUserAuthenticated) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const HomePage(),
-            ),
-          );
-        }
-      },
-      builder: (context, state) => const SplashScreen(),
+    return MaterialApp(
+      title: 'My Movie',
+      home: BlocConsumer<auth_bloc.AuthBloc, auth_bloc.AuthState>(
+        listener: (context, state) {
+          if (state is auth_bloc.AuthUserUnauthenticated) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginPage(),
+              ),
+            );
+          }
+          if (state is auth_bloc.AuthUserAuthenticated) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomePage(),
+              ),
+            );
+          }
+        },
+        builder: (context, state) => const SplashScreen(),
+      ),
     );
   }
 }

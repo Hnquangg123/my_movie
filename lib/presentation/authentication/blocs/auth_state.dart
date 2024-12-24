@@ -3,8 +3,6 @@ part of 'auth_bloc.dart';
 enum AuthenticationStatus { signIn, signout, checkAuthStatus }
 
 abstract class AuthState extends Equatable {
-  const AuthState();
-
   @override
   List<Object> get props => [];
 }

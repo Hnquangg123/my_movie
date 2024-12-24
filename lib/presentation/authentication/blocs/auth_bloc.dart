@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:my_movie/domain/authentication/repositories/i_authentication_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
+@Injectable()
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final IAuthenticationRepository _authenticationRepository;
   StreamSubscription<User?>? _userSubscription;

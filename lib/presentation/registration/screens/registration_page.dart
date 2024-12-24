@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_movie/core/config/dependency_injection.dart';
 import 'package:my_movie/presentation/login/screens/login_page.dart';
 import 'package:my_movie/presentation/registration/blocs/registration_bloc.dart';
 
-class RegistrationForm extends StatelessWidget {
-  const RegistrationForm({super.key});
+class RegistrationPage extends StatelessWidget {
+  const RegistrationPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt<RegistrationBloc>(),
+      child: const Scaffold(
+        body: _RegistrationForm(),
+      ),
+    );
+  }
+}
+
+class _RegistrationForm extends StatelessWidget {
+  const _RegistrationForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,16 +54,23 @@ class RegistrationForm extends StatelessWidget {
           ));
         }
       },
-      child: Column(
-        children: [
-          _EmailInputField(),
-          SizedBox(height: 8),
-          _PasswordInputField(),
-          SizedBox(height: 8),
-          _ConfirmPasswordInputField(),
-          SizedBox(height: 8),
-          _RegisterButton(),
-        ],
+      child: Center(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _EmailInputField(),
+              SizedBox(height: 8),
+              _PasswordInputField(),
+              SizedBox(height: 8),
+              _ConfirmPasswordInputField(),
+              SizedBox(height: 8),
+              _RegisterButton(),
+            ],
+          ),
+        ),
       ),
     );
   }
