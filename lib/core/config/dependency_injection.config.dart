@@ -9,6 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
+import 'package:http/http.dart' as _i519;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:my_movie/core/config/app_module.dart' as _i479;
 import 'package:my_movie/data/authentication/repositories/authentication_repository.dart'
@@ -41,12 +42,15 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final appModule = _$AppModule();
     gh.factory<_i454.GoTrueClient>(() => appModule.supabaseAuth);
+    gh.singleton<_i519.Client>(() => appModule.httpClient);
+    gh.singleton<_i471.FetchMovieService>(
+        () => _i471.FetchMovieService(client: gh<_i519.Client>()));
+    gh.factory<_i437.IAuthenticationRepository>(
+        () => _i249.AuthenticationRepository(gh<_i454.GoTrueClient>()));
     gh.factory<_i1044.IMovieRepository>(() => _i725.MovieRepository(
         fetchMovieService: gh<_i471.FetchMovieService>()));
     gh.factory<_i585.MovieBloc>(
         () => _i585.MovieBloc(gh<_i1044.IMovieRepository>()));
-    gh.factory<_i437.IAuthenticationRepository>(
-        () => _i249.AuthenticationRepository(gh<_i454.GoTrueClient>()));
     gh.factory<_i786.AuthBloc>(
         () => _i786.AuthBloc(gh<_i437.IAuthenticationRepository>()));
     gh.factory<_i942.LoginBloc>(

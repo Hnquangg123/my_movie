@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_movie/presentation/authentication/blocs/auth_bloc.dart';
 import 'package:my_movie/presentation/login/screens/login_page.dart';
+import 'package:my_movie/presentation/movie/screens/movie_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -9,7 +10,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
+      appBar: AppBar(
+        title: const Text('My Movie'),
+        actions: [
+          _LogoutButton(),
+        ],
+      ),
       body: Center(
         child: BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
@@ -22,7 +28,7 @@ class HomePage extends StatelessWidget {
               );
             }
           },
-          child: const _LogoutButton(),
+          child: MoviePage(),
         ),
       ),
     );

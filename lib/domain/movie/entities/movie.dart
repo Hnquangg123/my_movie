@@ -5,10 +5,16 @@ class Movie {
   final String posterPath;
   final String releaseDate;
 
-  Movie(
-      {required this.id,
-      required this.title,
-      required this.overview,
-      required this.posterPath,
-      required this.releaseDate});
+  Movie({
+    required this.id,
+    required this.title,
+    required this.overview,
+    required this.posterPath,
+    required this.releaseDate,
+  });
+
+  @override
+  String toString() {
+    return 'Movie{id: $id, title: $title, overview: $overview, posterPath: $posterPath, releaseDate: $releaseDate}';
+  }
 }

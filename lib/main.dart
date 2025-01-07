@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_movie/core/config/dependency_injection.dart';
+import 'package:my_movie/core/util/app_colors.dart';
+import 'package:my_movie/core/util/app_theme.dart';
 import 'package:my_movie/presentation/authentication/blocs/auth_bloc.dart'
     as auth_bloc;
 import 'package:my_movie/presentation/authentication/screens/home_page.dart';
@@ -36,6 +38,20 @@ class MyMovieApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My Movie',
+      theme: ThemeData(
+        brightness: AppColors.brightness,
+        colorScheme: ColorScheme.dark(
+          primary: AppColors.primaryColor,
+          secondary: AppColors.secondaryColor,
+          surface: AppColors.surfaceColor,
+          onPrimary: AppColors.onPrimaryColor,
+          onSecondary: AppColors.onSecondaryColor,
+          onSurface: AppColors.onSurfaceColor,
+        ),
+        scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
+        textTheme: AppTheme.textTheme,
+        appBarTheme: AppTheme.appBarTheme,
+      ),
       home: BlocConsumer<auth_bloc.AuthBloc, auth_bloc.AuthState>(
         listener: (context, state) {
           if (state is auth_bloc.AuthUserUnauthenticated) {

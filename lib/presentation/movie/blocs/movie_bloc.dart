@@ -26,7 +26,10 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     final result = await movieRepository.getNowPlayingMovies();
     result.fold(
       (failure) => emit(MovieError(message: failure.message)),
-      (movies) => emit(MovieLoaded(movies: movies)),
+      (movies) {
+        final currentMovies = state is MovieLoaded ? (state as MovieLoaded).movies : {};
+        emit(MovieLoaded(movies: {...currentMovies, 'now_playing': movies}));
+      },
     );
   }
 
@@ -36,7 +39,10 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     final result = await movieRepository.getPopularMovies();
     result.fold(
       (failure) => emit(MovieError(message: failure.message)),
-      (movies) => emit(MovieLoaded(movies: movies)),
+      (movies) {
+        final currentMovies = state is MovieLoaded ? (state as MovieLoaded).movies : {};
+        emit(MovieLoaded(movies: {...currentMovies, 'popular': movies}));
+      },
     );
   }
 }
