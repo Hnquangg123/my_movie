@@ -4,8 +4,8 @@ import 'package:my_movie/core/util/app_colors.dart';
 import 'package:my_movie/core/util/image_url.dart';
 import 'package:my_movie/presentation/movie/blocs/movie_bloc.dart';
 
-class PopularMovies extends StatelessWidget {
-  const PopularMovies({super.key});
+class TrendingMovies extends StatelessWidget {
+  const TrendingMovies({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,8 @@ class PopularMovies extends StatelessWidget {
           );
         }
         if (state is MovieLoaded) {
-          final popularMovies = state.movies['popular'] ?? [];
-          if (popularMovies.isEmpty) {
+          final trendingMovies = state.movies['trending'] ?? [];
+          if (trendingMovies.isEmpty) {
             return Center(
               child: Text(
                 'No movies available for now!',
@@ -35,17 +35,17 @@ class PopularMovies extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Row(
                   spacing: 8,
                   children: [
                     Icon(
-                      Icons.star,
+                      Icons.trending_up,
                       color: AppColors.primaryColor,
                       size: 28,
                     ),
                     Text(
-                      'Popular',
+                      'Trending',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -55,17 +55,20 @@ class PopularMovies extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
+              ConstrainedBox(
                 // 0.45 for 1.3.1
-                height: MediaQuery.of(context).size.height * 0.55,
+                constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.65),
+                // height: MediaQuery.of(context).size.height * 0.65,
                 child: CarouselView.weighted(
                   flexWeights: [1, 7, 1],
                   itemSnapping: true,
-                  scrollDirection: Axis.horizontal,
+                  // controller: CarouselController(
+                  //   initialItem: 1,
+                  // ),
                   children: List<Widget>.generate(
-                    popularMovies.length,
+                    trendingMovies.length,
                     (int index) {
-                      final movies = popularMovies[index];
+                      final movies = trendingMovies[index];
                       return GestureDetector(
                         onTap: () {
                           // Handle tap event here

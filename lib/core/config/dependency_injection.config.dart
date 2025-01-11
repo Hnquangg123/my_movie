@@ -17,14 +17,24 @@ import 'package:my_movie/data/authentication/repositories/authentication_reposit
 import 'package:my_movie/data/movie/repositories/movie_repository.dart'
     as _i725;
 import 'package:my_movie/data/movie/services/fetch_movie_service.dart' as _i471;
+import 'package:my_movie/data/movie_detail/repositories/movie_detail_repository.dart'
+    as _i846;
+import 'package:my_movie/data/movie_detail/services/fetch_movie_detail_service.dart'
+    as _i924;
+import 'package:my_movie/data/movie_detail/services/fetch_video_service.dart'
+    as _i418;
 import 'package:my_movie/domain/authentication/repositories/i_authentication_repository.dart'
     as _i437;
 import 'package:my_movie/domain/movie/repositories/i_movie_repository.dart'
     as _i1044;
+import 'package:my_movie/domain/movie_detail/repositories/i_movie_detail_repository.dart'
+    as _i372;
 import 'package:my_movie/presentation/authentication/blocs/auth_bloc.dart'
     as _i786;
 import 'package:my_movie/presentation/login/blocs/login_bloc.dart' as _i942;
 import 'package:my_movie/presentation/movie/blocs/movie_bloc.dart' as _i585;
+import 'package:my_movie/presentation/movie_detail/blocs/detail/detail_bloc.dart'
+    as _i626;
 import 'package:my_movie/presentation/registration/blocs/registration_bloc.dart'
     as _i280;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
@@ -43,7 +53,11 @@ extension GetItInjectableX on _i174.GetIt {
     final appModule = _$AppModule();
     gh.factory<_i454.GoTrueClient>(() => appModule.supabaseAuth);
     gh.singleton<_i519.Client>(() => appModule.httpClient);
-    gh.singleton<_i471.FetchMovieService>(
+    gh.singleton<_i924.FetchMovieDetailService>(
+        () => _i924.FetchMovieDetailService(client: gh<_i519.Client>()));
+    gh.singleton<_i418.FetchVideoService>(
+        () => _i418.FetchVideoService(client: gh<_i519.Client>()));
+    gh.lazySingleton<_i471.FetchMovieService>(
         () => _i471.FetchMovieService(client: gh<_i519.Client>()));
     gh.factory<_i437.IAuthenticationRepository>(
         () => _i249.AuthenticationRepository(gh<_i454.GoTrueClient>()));
@@ -51,12 +65,16 @@ extension GetItInjectableX on _i174.GetIt {
         fetchMovieService: gh<_i471.FetchMovieService>()));
     gh.factory<_i585.MovieBloc>(
         () => _i585.MovieBloc(gh<_i1044.IMovieRepository>()));
+    gh.factory<_i372.IMovieDetailRepository>(() => _i846.MovieDetailRepository(
+        fetchMovieDetailService: gh<_i924.FetchMovieDetailService>()));
     gh.factory<_i786.AuthBloc>(
         () => _i786.AuthBloc(gh<_i437.IAuthenticationRepository>()));
     gh.factory<_i942.LoginBloc>(
         () => _i942.LoginBloc(gh<_i437.IAuthenticationRepository>()));
     gh.factory<_i280.RegistrationBloc>(
         () => _i280.RegistrationBloc(gh<_i437.IAuthenticationRepository>()));
+    gh.factory<_i626.DetailBloc>(
+        () => _i626.DetailBloc(gh<_i372.IMovieDetailRepository>()));
     return this;
   }
 }

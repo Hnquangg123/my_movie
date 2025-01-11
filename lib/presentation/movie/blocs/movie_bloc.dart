@@ -5,7 +5,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 
-import 'package:my_movie/domain/movie/entities/movie.dart';
 import 'package:my_movie/domain/movie/repositories/i_movie_repository.dart';
 
 part 'movie_event.dart';
@@ -18,6 +17,8 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
   MovieBloc(this.movieRepository) : super(MovieInitial()) {
     on<FetchNowPlayingMovies>(_onFetchNowPlayingMovies);
     on<FetchPopularMovies>(_onFetchPopularMovies);
+    on<FetchTrendingMoviesAndTV>(_onFetchTrendingrMoviesAndTV);
+    on<FetchTVSeriesAirToday>(_onFetchTVSeriesAirToday);
   }
 
   Future<void> _onFetchNowPlayingMovies(
@@ -27,7 +28,8 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     result.fold(
       (failure) => emit(MovieError(message: failure.message)),
       (movies) {
-        final currentMovies = state is MovieLoaded ? (state as MovieLoaded).movies : {};
+        final currentMovies =
+            state is MovieLoaded ? (state as MovieLoaded).movies : {};
         emit(MovieLoaded(movies: {...currentMovies, 'now_playing': movies}));
       },
     );
@@ -40,8 +42,37 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     result.fold(
       (failure) => emit(MovieError(message: failure.message)),
       (movies) {
-        final currentMovies = state is MovieLoaded ? (state as MovieLoaded).movies : {};
+        final currentMovies =
+            state is MovieLoaded ? (state as MovieLoaded).movies : {};
         emit(MovieLoaded(movies: {...currentMovies, 'popular': movies}));
+      },
+    );
+  }
+
+  Future<void> _onFetchTrendingrMoviesAndTV(
+      FetchTrendingMoviesAndTV event, Emitter<MovieState> emit) async {
+    emit(MovieLoading());
+    final result = await movieRepository.getTrendingMoviesAndTV();
+    result.fold(
+      (failure) => emit(MovieError(message: failure.message)),
+      (movies) {
+        final currentMovies =
+            state is MovieLoaded ? (state as MovieLoaded).movies : {};
+        emit(MovieLoaded(movies: {...currentMovies, 'trending': movies}));
+      },
+    );
+  }
+
+  Future<void> _onFetchTVSeriesAirToday(
+      FetchTVSeriesAirToday event, Emitter<MovieState> emit) async {
+    emit(MovieLoading());
+    final result = await movieRepository.getTVSeriesAirToday();
+    result.fold(
+      (failure) => emit(MovieError(message: failure.message)),
+      (tv) {
+        final currentTV =
+            state is MovieLoaded ? (state as MovieLoaded).movies : {};
+        emit(MovieLoaded(movies: {...currentTV, 'tv_air_today': tv}));
       },
     );
   }

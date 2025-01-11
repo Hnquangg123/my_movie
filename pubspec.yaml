@@ -59,7 +59,9 @@ dependencies:
 
   #API
   http: ^1.2.2
-  
+
+  #Youtube Player
+  youtube_player_flutter: ^9.1.1
 
 dev_dependencies:
   flutter_test:

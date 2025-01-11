@@ -30,4 +30,24 @@ class MovieRepository implements IMovieRepository {
       return Left(ServerFailure(message: e.toString()));
     }
   }
+  
+  @override
+  Future<Either<Failure, List<dynamic>>> getTrendingMoviesAndTV() async {
+    try {
+      final trendingMovies = await fetchMovieService.fetchTrendingMoviesAndTV();
+      return Right(trendingMovies);
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<dynamic>>> getTVSeriesAirToday() async {
+    try {
+      final tvSeriesAirToday = await fetchMovieService.fetchTVSeriesAirToday();
+      return Right(tvSeriesAirToday);
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
+    }
+  }
 }

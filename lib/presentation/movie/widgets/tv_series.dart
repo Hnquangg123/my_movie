@@ -4,8 +4,8 @@ import 'package:my_movie/core/util/app_colors.dart';
 import 'package:my_movie/core/util/image_url.dart';
 import 'package:my_movie/presentation/movie/blocs/movie_bloc.dart';
 
-class NowPlayingMovies extends StatelessWidget {
-  const NowPlayingMovies({super.key});
+class TvSeries extends StatelessWidget {
+  const TvSeries({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +22,11 @@ class NowPlayingMovies extends StatelessWidget {
           );
         }
         if (state is MovieLoaded) {
-          final nowPlayingMovies = state.movies['now_playing'] ?? [];
-          if (nowPlayingMovies.isEmpty) {
+          final tvSeriesAirToday = state.movies['tv_air_today'] ?? [];
+          if (tvSeriesAirToday.isEmpty) {
             return Center(
               child: Text(
-                'No movies available for now!',
+                'No TV available for now!',
                 style: TextStyle(color: AppColors.primaryColor),
               ),
             );
@@ -45,7 +45,7 @@ class NowPlayingMovies extends StatelessWidget {
                       size: 28,
                     ),
                     Text(
-                      'Now Playing',
+                      'TV Series Air Today',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -68,9 +68,9 @@ class NowPlayingMovies extends StatelessWidget {
                       borderRadius: BorderRadius.circular(28),
                     ),
                     children: List<Widget>.generate(
-                      nowPlayingMovies.length,
+                      tvSeriesAirToday.length,
                       (int index) {
-                        final movies = nowPlayingMovies[index];
+                        final tv = tvSeriesAirToday[index];
                         return GestureDetector(
                           onTap: () {
                             // Handle tap event here
@@ -90,7 +90,7 @@ class NowPlayingMovies extends StatelessWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(0),
                               child: Image.network(
-                                '${ImageUrl.tmdbBaseUrlW500}${movies.posterPath}',
+                                '${ImageUrl.tmdbBaseUrlW500}${tv.posterPath}',
                                 fit: BoxFit.cover,
                                 errorBuilder:
                                     (context, error, stackTrace) => Icon(
