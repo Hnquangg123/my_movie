@@ -53,12 +53,12 @@ extension GetItInjectableX on _i174.GetIt {
     final appModule = _$AppModule();
     gh.factory<_i454.GoTrueClient>(() => appModule.supabaseAuth);
     gh.singleton<_i519.Client>(() => appModule.httpClient);
-    gh.singleton<_i924.FetchMovieDetailService>(
-        () => _i924.FetchMovieDetailService(client: gh<_i519.Client>()));
-    gh.singleton<_i418.FetchVideoService>(
-        () => _i418.FetchVideoService(client: gh<_i519.Client>()));
-    gh.lazySingleton<_i471.FetchMovieService>(
+    gh.singleton<_i471.FetchMovieService>(
         () => _i471.FetchMovieService(client: gh<_i519.Client>()));
+    gh.lazySingleton<_i924.FetchMovieDetailService>(
+        () => _i924.FetchMovieDetailService(client: gh<_i519.Client>()));
+    gh.lazySingleton<_i418.FetchVideoService>(
+        () => _i418.FetchVideoService(client: gh<_i519.Client>()));
     gh.factory<_i437.IAuthenticationRepository>(
         () => _i249.AuthenticationRepository(gh<_i454.GoTrueClient>()));
     gh.factory<_i1044.IMovieRepository>(() => _i725.MovieRepository(

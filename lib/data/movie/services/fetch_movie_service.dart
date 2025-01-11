@@ -6,7 +6,7 @@ import 'package:my_movie/core/error/exception.dart';
 import 'package:my_movie/domain/movie/entities/movie.dart';
 import 'package:my_movie/domain/movie/entities/tv.dart';
 
-@lazySingleton
+@singleton
 @Injectable()
 class FetchMovieService {
   final http.Client client;

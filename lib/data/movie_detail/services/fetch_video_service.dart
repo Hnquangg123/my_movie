@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:my_movie/core/error/exception.dart';
 import 'package:my_movie/domain/movie_detail/entities/video.dart';
 
-@singleton
+@lazySingleton
 @Injectable()
 class FetchVideoService {
   final http.Client client;
