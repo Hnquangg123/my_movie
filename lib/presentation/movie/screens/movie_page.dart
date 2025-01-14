@@ -35,7 +35,7 @@ class MovieContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        // spacing: 10,
+        spacing: 10,
         children: [
           // SizedBox(height: 10),
           // PopularMovies(),

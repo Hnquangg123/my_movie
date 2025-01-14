@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_movie/core/util/app_colors.dart';
 import 'package:my_movie/core/util/image_url.dart';
 import 'package:my_movie/presentation/movie/blocs/movie_bloc.dart';
+import 'package:my_movie/presentation/movie_detail/screens/movie_tv_detail.dart';
 
 class TrendingMovies extends StatelessWidget {
   const TrendingMovies({super.key});
@@ -57,7 +60,8 @@ class TrendingMovies extends StatelessWidget {
               ),
               ConstrainedBox(
                 // 0.45 for 1.3.1
-                constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.65),
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.65),
                 // height: MediaQuery.of(context).size.height * 0.65,
                 child: CarouselView.weighted(
                   flexWeights: [1, 7, 1],
@@ -65,49 +69,57 @@ class TrendingMovies extends StatelessWidget {
                   // controller: CarouselController(
                   //   initialItem: 1,
                   // ),
+                  onTap: (index) {
+                    final movies = trendingMovies[index];
+                    print('Trending Movies: ${movies.title}');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MovieTVDetail(
+                          movieTVId: movies.id,
+                        ),
+                      ),
+                    );
+                  },
                   children: List<Widget>.generate(
                     trendingMovies.length,
                     (int index) {
                       final movies = trendingMovies[index];
-                      return GestureDetector(
-                        onTap: () {
-                          // Handle tap event here
-                        },
-                        child: Container(
-                          margin: EdgeInsets.all(9.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.onSecondaryColor,
-                                blurRadius: 16,
-                                offset: Offset(0, 1),
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              '${ImageUrl.tmdbBaseUrlW500}${movies.posterPath}',
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) => Icon(
-                                Icons.error,
-                                size: 100,
-                                color: AppColors.surfaceColor,
-                              ),
-                              loadingBuilder: (context, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    value: loadingProgress.expectedTotalBytes !=
-                                            null
-                                        ? loadingProgress.cumulativeBytesLoaded /
-                                            (loadingProgress.expectedTotalBytes ?? 1)
-                                        : null,
-                                  ),
-                                );
-                              },
+                      return Container(
+                        margin: EdgeInsets.all(9.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.onSecondaryColor,
+                              blurRadius: 16,
+                              offset: Offset(0, 1),
                             ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            '${ImageUrl.tmdbBaseUrlW500}${movies.posterPath}',
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) => Icon(
+                              Icons.error,
+                              size: 100,
+                              color: AppColors.surfaceColor,
+                            ),
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          (loadingProgress.expectedTotalBytes ??
+                                              1)
+                                      : null,
+                                ),
+                              );
+                            },
                           ),
                         ),
                       );

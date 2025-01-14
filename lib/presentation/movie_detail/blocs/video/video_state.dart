@@ -12,12 +12,14 @@ final class VideoInitial extends VideoState {}
 final class VideoLoading extends VideoState {}
 
 final class VideoLoaded extends VideoState {
-  final List<Video> videos;
+  final Video video;
+  final YoutubePlayerController controller;
 
-  VideoLoaded({required this.videos});
+
+  VideoLoaded({required this.video, required this.controller,});
 
   @override
-  List<Object> get props => [videos];
+  List<Object> get props => [video, controller];
 }
 
 final class VideoError extends VideoState {

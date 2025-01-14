@@ -1,6 +1,7 @@
 part of 'movie_bloc.dart';
 
-sealed class MovieState extends Equatable {
+abstract class MovieState extends Equatable {
+  const MovieState();
 
   @override
   List<Object> get props => [];
@@ -13,7 +14,7 @@ class MovieLoading extends MovieState {}
 class MovieLoaded extends MovieState {
   final Map<String, List<dynamic>> movies;
 
-  MovieLoaded({required this.movies});
+  const MovieLoaded({required this.movies});
 
   @override
   List<Object> get props => [movies];
@@ -22,7 +23,7 @@ class MovieLoaded extends MovieState {
 class MovieError extends MovieState {
   final String message;
 
-  MovieError({required this.message});
+  const MovieError({required this.message});
 
   @override
   List<Object> get props => [message];

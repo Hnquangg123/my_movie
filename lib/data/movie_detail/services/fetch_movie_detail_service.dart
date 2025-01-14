@@ -26,12 +26,12 @@ class FetchMovieDetailService {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return Detail(
-          title: data['title'],
-          overview: data['overview'],
-          posterPath: data['poster_path'],
-          backdropPath: data['backdrop_path'],
-          releaseDate: data['release_date'],
-          voteAverage: data['vote_average']);
+          title: data['title'] ?? 'Unknown',
+          overview: data['overview'] ?? 'No overview available',
+          posterPath: data['poster_path'] ?? '',
+          backdropPath: data['backdrop_path'] ?? '',
+          releaseDate: data['release_date'] ?? 'Unknown',
+          voteAverage: (data['vote_average'] as num?)?.toDouble() ?? 0.0);
     } else {
       throw ServerException();
     }

@@ -30,4 +30,6 @@ class Video {
   String toString() {
     return 'Video{id: $id, key: $key, name: $name, site: $site, size: $size, type: $type}';
   }
+
+  bool get isEmpty => id.isEmpty && key.isEmpty;
 }

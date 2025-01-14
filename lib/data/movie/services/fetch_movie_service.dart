@@ -29,16 +29,13 @@ class FetchMovieService {
       final data = json.decode(response.body);
       final listData = (data['results'] as List)
           .map((movie) => Movie(
-                id: movie['id'],
-                title: movie['title'],
-                overview: movie['overview'],
-                posterPath: movie['poster_path'],
-                releaseDate: movie['release_date'],
+                id: movie['id'] ?? 0,
+                title: movie['title'] ?? 'Unknown',
+                overview: movie['overview'] ?? 'No overview available',
+                posterPath: movie['poster_path'] ?? '',
+                releaseDate: movie['release_date'] ?? 'Unknown',
               ))
           .toList();
-      // print(
-      //     "🚀 ~ FetchMovieService ~ Future<List<Movie>>fetchPopularMovies ~ data: $data");
-      // print(listData[1]);
       return listData;
     } else {
       throw ServerException();
@@ -60,11 +57,11 @@ class FetchMovieService {
       final data = json.decode(response.body);
       return (data['results'] as List)
           .map((movie) => Movie(
-                id: movie['id'],
-                title: movie['title'],
-                overview: movie['overview'],
-                posterPath: movie['poster_path'],
-                releaseDate: movie['release_date'],
+                id: movie['id'] ?? 0,
+                title: movie['title'] ?? 'Unknown',
+                overview: movie['overview'] ?? 'No overview available',
+                posterPath: movie['poster_path'] ?? '',
+                releaseDate: movie['release_date'] ?? 'Unknown',
               ))
           .toList();
     } else {
@@ -88,19 +85,19 @@ class FetchMovieService {
       final listData = (data['results'] as List).map((movie) {
         if (movie['media_type'] == 'movie') {
           return Movie(
-            id: movie['id'],
-            title: movie['title'],
-            overview: movie['overview'],
-            posterPath: movie['poster_path'],
-            releaseDate: movie['release_date'],
+            id: movie['id'] ?? 0,
+            title: movie['title'] ?? 'Unknown',
+            overview: movie['overview'] ?? 'No overview available',
+            posterPath: movie['poster_path'] ?? '',
+            releaseDate: movie['release_date'] ?? 'Unknown',
           );
         } else {
           return TV(
-            id: movie['id'],
-            title: movie['name'],
-            overview: movie['overview'],
-            posterPath: movie['poster_path'],
-            firstAirDate: movie['first_air_date'],
+            id: movie['id'] ?? 0,
+            title: movie['name'] ?? 'Unknown',
+            overview: movie['overview'] ?? 'No overview available',
+            posterPath: movie['poster_path'] ?? '',
+            firstAirDate: movie['first_air_date'] ?? 'Unknown',
           );
         }
       }).toList(); // Convert the map result to a list
@@ -124,15 +121,16 @@ class FetchMovieService {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      final listData = (data['results'] as List).map((tv) {
-        return TV(
-          id: tv['id'],
-          title: tv['name'],
-          overview: tv['overview'],
-          posterPath: tv['poster_path'],
-          firstAirDate: tv['first_air_date'],
-        );
-      }).toList(); // Convert the map result to a list
+
+      final listData = (data['results'] as List)
+          .map((tv) => TV(
+                id: tv['id'] ?? 0,
+                title: tv['name'] ?? 'Unknown',
+                overview: tv['overview'] ?? 'No overview available',
+                posterPath: tv['poster_path'] ?? '',
+                firstAirDate: tv['first_air_date'] ?? 'Unknown',
+              ))
+          .toList();
 
       return listData;
     } else {

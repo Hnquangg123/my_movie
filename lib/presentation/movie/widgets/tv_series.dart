@@ -37,13 +37,13 @@ class TvSeries extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
-                  spacing: 8,
                   children: [
                     Icon(
                       Icons.movie,
                       color: AppColors.primaryColor,
                       size: 28,
                     ),
+                    SizedBox(width: 8), // Add spacing between icon and text
                     Text(
                       'TV Series Air Today',
                       style: TextStyle(
@@ -90,10 +90,12 @@ class TvSeries extends StatelessWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(0),
                               child: Image.network(
-                                '${ImageUrl.tmdbBaseUrlW500}${tv.posterPath}',
+                                tv.posterPath != ''
+                                    ? '${ImageUrl.tmdbBaseUrlW500}${tv.posterPath}'
+                                    : 'https://dummyimage.com/500x750/cccccc/ffffff&text=No+Image',
                                 fit: BoxFit.cover,
-                                errorBuilder:
-                                    (context, error, stackTrace) => Icon(
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Icon(
                                   Icons.error,
                                   size: 100,
                                   color: AppColors.surfaceColor,
@@ -103,15 +105,15 @@ class TvSeries extends StatelessWidget {
                                   if (loadingProgress == null) return child;
                                   return Center(
                                     child: CircularProgressIndicator(
-                                      value: loadingProgress
-                                                  .expectedTotalBytes !=
-                                              null
-                                          ? loadingProgress
-                                                  .cumulativeBytesLoaded /
-                                              (loadingProgress
-                                                      .expectedTotalBytes ??
-                                                  1)
-                                          : null,
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  (loadingProgress
+                                                          .expectedTotalBytes ??
+                                                      1)
+                                              : null,
                                     ),
                                   );
                                 },

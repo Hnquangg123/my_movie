@@ -12,7 +12,7 @@ class MovieRepository implements IMovieRepository {
   MovieRepository({required this.fetchMovieService});
 
   @override
-  Future<Either<Failure, List<Movie>>> getNowPlayingMovies() async {
+  Future<Either<Failure, List<dynamic>>> getNowPlayingMovies() async {
     try {
       final nowPlayingMovies = await fetchMovieService.fetchNowPlayingrMovies();
       return Right(nowPlayingMovies);

@@ -15,6 +15,6 @@ class TV {
 
   @override
   String toString() {
-    return 'TV{id: $id, title: $title, overview: $overview, posterPath: $posterPath, first_air_date: $firstAirDate}';
+    return 'TV{id: $id, title: $title, overview: $overview, posterPath: $posterPath, firstAirDate: $firstAirDate}';
   }
 }
