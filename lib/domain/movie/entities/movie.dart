@@ -4,6 +4,7 @@ class Movie {
   final String overview;
   final String posterPath;
   final String releaseDate;
+  final String mediaType = 'movie';
 
   Movie({
     required this.id,

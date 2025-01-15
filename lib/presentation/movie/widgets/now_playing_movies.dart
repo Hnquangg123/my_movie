@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_movie/core/util/app_colors.dart';
 import 'package:my_movie/core/util/image_url.dart';
 import 'package:my_movie/presentation/movie/blocs/movie_bloc.dart';
+import 'package:my_movie/presentation/movie_detail/screens/movie_tv_detail.dart';
 
 class NowPlayingMovies extends StatelessWidget {
   const NowPlayingMovies({super.key});
@@ -67,55 +68,63 @@ class NowPlayingMovies extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(28),
                     ),
+                    onTap: (index) {
+                    final movies = nowPlayingMovies[index];
+                    print('Now Playing Movies: ${movies.title}');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MovieTVDetail(
+                          movieTVId: movies.id,
+                          mediaType: movies.mediaType,
+                        ),
+                      ),
+                    );
+                  },
                     children: List<Widget>.generate(
                       nowPlayingMovies.length,
                       (int index) {
                         final movies = nowPlayingMovies[index];
-                        return GestureDetector(
-                          onTap: () {
-                            // Handle tap event here
-                          },
-                          child: Container(
-                            margin: EdgeInsets.all(0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.onSecondaryColor,
-                                  blurRadius: 16,
-                                  offset: Offset(0, 1),
-                                ),
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(0),
-                              child: Image.network(
-                                '${ImageUrl.tmdbBaseUrlW500}${movies.posterPath}',
-                                fit: BoxFit.cover,
-                                errorBuilder:
-                                    (context, error, stackTrace) => Icon(
-                                  Icons.error,
-                                  size: 100,
-                                  color: AppColors.surfaceColor,
-                                ),
-                                loadingBuilder:
-                                    (context, child, loadingProgress) {
-                                  if (loadingProgress == null) return child;
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      value: loadingProgress
-                                                  .expectedTotalBytes !=
-                                              null
-                                          ? loadingProgress
-                                                  .cumulativeBytesLoaded /
-                                              (loadingProgress
-                                                      .expectedTotalBytes ??
-                                                  1)
-                                          : null,
-                                    ),
-                                  );
-                                },
+                        return Container(
+                          margin: EdgeInsets.all(0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.onSecondaryColor,
+                                blurRadius: 16,
+                                offset: Offset(0, 1),
                               ),
+                            ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(0),
+                            child: Image.network(
+                              '${ImageUrl.tmdbBaseUrlW500}${movies.posterPath}',
+                              fit: BoxFit.cover,
+                              errorBuilder:
+                                  (context, error, stackTrace) => Icon(
+                                Icons.error,
+                                size: 100,
+                                color: AppColors.surfaceColor,
+                              ),
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress
+                                                .expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            (loadingProgress
+                                                    .expectedTotalBytes ??
+                                                1)
+                                        : null,
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         );

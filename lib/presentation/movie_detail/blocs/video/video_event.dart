@@ -9,8 +9,9 @@ sealed class VideoEvent extends Equatable {
 
 class FetchVideos extends VideoEvent {
   final int id;
+  final String mediaType;
 
-  FetchVideos({required this.id});
+  FetchVideos({required this.id, required this.mediaType});
 
   @override
   List<Object> get props => [id];

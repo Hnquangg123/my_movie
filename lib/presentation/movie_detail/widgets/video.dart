@@ -31,7 +31,23 @@ class Video extends StatelessWidget {
             ),
           );
         } else if (videoState is VideoError) {
-          return Text('Failed to load video');
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 16,
+              children: [
+                SizedBox(height: 32),
+                Text(
+                  videoState.message,
+                  style: TextStyle(
+                    color: AppColors.primaryColor,
+                  fontSize: 32,
+                    decoration: TextDecoration.none
+                  ),
+                ),
+              ],
+            ),
+          );
         } else {
           return Container();
         }

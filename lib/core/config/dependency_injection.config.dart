@@ -37,8 +37,8 @@ import 'package:my_movie/presentation/authentication/blocs/auth_bloc.dart'
     as _i786;
 import 'package:my_movie/presentation/login/blocs/login_bloc.dart' as _i942;
 import 'package:my_movie/presentation/movie/blocs/movie_bloc.dart' as _i585;
-import 'package:my_movie/presentation/movie_detail/blocs/detail/detail_bloc.dart'
-    as _i626;
+import 'package:my_movie/presentation/movie_detail/blocs/movie_detail/movie_detail_bloc.dart'
+    as _i890;
 import 'package:my_movie/presentation/movie_detail/blocs/video/video_bloc.dart'
     as _i127;
 import 'package:my_movie/presentation/registration/blocs/registration_bloc.dart'
@@ -83,8 +83,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i280.RegistrationBloc(gh<_i437.IAuthenticationRepository>()));
     gh.factory<_i127.VideoBloc>(
         () => _i127.VideoBloc(gh<_i751.IVideoRepository>()));
-    gh.factory<_i626.DetailBloc>(
-        () => _i626.DetailBloc(gh<_i372.IMovieDetailRepository>()));
+    gh.factory<_i890.MovieDetailBloc>(
+        () => _i890.MovieDetailBloc(gh<_i372.IMovieDetailRepository>()));
     return this;
   }
 }

@@ -1,13 +1,13 @@
-part of 'detail_bloc.dart';
+part of 'movie_detail_bloc.dart';
 
-abstract class DetailEvent extends Equatable {
+abstract class MovieDetailEvent extends Equatable {
   // const DetailEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class FetchMovieDetail extends DetailEvent {
+class FetchMovieDetail extends MovieDetailEvent {
   final int id;
 
   FetchMovieDetail({required this.id});

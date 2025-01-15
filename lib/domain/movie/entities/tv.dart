@@ -4,6 +4,7 @@ class TV {
   final String overview;
   final String posterPath;
   final String firstAirDate;
+  final String mediaType = 'tv';
 
   TV({
     required this.id,

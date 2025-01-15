@@ -77,6 +77,7 @@ class TrendingMovies extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (context) => MovieTVDetail(
                           movieTVId: movies.id,
+                          mediaType: movies.mediaType,
                         ),
                       ),
                     );

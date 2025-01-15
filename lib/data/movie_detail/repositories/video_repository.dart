@@ -12,9 +12,19 @@ class VideoRepository implements IVideoRepository {
   VideoRepository({required this.fetchVideoService});
 
   @override
-  Future<Either<Failure, List<Video>>> getVideos(int movieId) async {
+  Future<Either<Failure, List<Video>>> getVideosMovie(int movieId) async {
     try {
-      final video = await fetchVideoService.fetchVideos(movieId);
+      final video = await fetchVideoService.fetchVideosMovie(movieId);
+      return Right(video);
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Video>>> getVideosTV(int movieId) async {
+    try {
+      final video = await fetchVideoService.fetchVideosTV(movieId);
       return Right(video);
     } catch (e) {
       return Left(ServerFailure(message: e.toString()));
