@@ -19,10 +19,14 @@ import 'package:my_movie/data/movie/repositories/movie_repository.dart'
 import 'package:my_movie/data/movie/services/fetch_movie_service.dart' as _i471;
 import 'package:my_movie/data/movie_detail/repositories/movie_detail_repository.dart'
     as _i846;
+import 'package:my_movie/data/movie_detail/repositories/tv_detail_repository.dart'
+    as _i663;
 import 'package:my_movie/data/movie_detail/repositories/video_repository.dart'
     as _i102;
 import 'package:my_movie/data/movie_detail/services/fetch_movie_detail_service.dart'
     as _i924;
+import 'package:my_movie/data/movie_detail/services/fetch_tv_detail_service.dart'
+    as _i232;
 import 'package:my_movie/data/movie_detail/services/fetch_video_service.dart'
     as _i418;
 import 'package:my_movie/domain/authentication/repositories/i_authentication_repository.dart'
@@ -31,6 +35,8 @@ import 'package:my_movie/domain/movie/repositories/i_movie_repository.dart'
     as _i1044;
 import 'package:my_movie/domain/movie_detail/repositories/i_movie_detail_repository.dart'
     as _i372;
+import 'package:my_movie/domain/movie_detail/repositories/i_tv_detail_repository.dart'
+    as _i106;
 import 'package:my_movie/domain/movie_detail/repositories/i_video_repository.dart'
     as _i751;
 import 'package:my_movie/presentation/authentication/blocs/auth_bloc.dart'
@@ -39,6 +45,8 @@ import 'package:my_movie/presentation/login/blocs/login_bloc.dart' as _i942;
 import 'package:my_movie/presentation/movie/blocs/movie_bloc.dart' as _i585;
 import 'package:my_movie/presentation/movie_detail/blocs/movie_detail/movie_detail_bloc.dart'
     as _i890;
+import 'package:my_movie/presentation/movie_detail/blocs/tv_detail/tv_detail_bloc.dart'
+    as _i990;
 import 'package:my_movie/presentation/movie_detail/blocs/video/video_bloc.dart'
     as _i127;
 import 'package:my_movie/presentation/registration/blocs/registration_bloc.dart'
@@ -65,6 +73,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i924.FetchMovieDetailService(client: gh<_i519.Client>()));
     gh.lazySingleton<_i418.FetchVideoService>(
         () => _i418.FetchVideoService(client: gh<_i519.Client>()));
+    gh.lazySingleton<_i232.FetchTvDetailService>(
+        () => _i232.FetchTvDetailService(client: gh<_i519.Client>()));
+    gh.factory<_i106.ITvDetailRepository>(() => _i663.TvDetailRepository(
+        fetchTvDetailService: gh<_i232.FetchTvDetailService>()));
     gh.factory<_i437.IAuthenticationRepository>(
         () => _i249.AuthenticationRepository(gh<_i454.GoTrueClient>()));
     gh.factory<_i1044.IMovieRepository>(() => _i725.MovieRepository(
@@ -75,6 +87,8 @@ extension GetItInjectableX on _i174.GetIt {
         fetchMovieDetailService: gh<_i924.FetchMovieDetailService>()));
     gh.factory<_i751.IVideoRepository>(() => _i102.VideoRepository(
         fetchVideoService: gh<_i418.FetchVideoService>()));
+    gh.factory<_i990.TvDetailBloc>(
+        () => _i990.TvDetailBloc(gh<_i106.ITvDetailRepository>()));
     gh.factory<_i786.AuthBloc>(
         () => _i786.AuthBloc(gh<_i437.IAuthenticationRepository>()));
     gh.factory<_i942.LoginBloc>(

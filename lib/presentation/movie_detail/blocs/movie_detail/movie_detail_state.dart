@@ -10,7 +10,7 @@ final class MovieDetailInitial extends MovieDetailState {}
 final class MovieDetailLoading extends MovieDetailState {}
 
 final class MovieDetailLoaded extends MovieDetailState {
-  final Map<String, dynamic> detail;
+  final Map<String, MovieDetail> detail;
 
   MovieDetailLoaded({required this.detail});
 

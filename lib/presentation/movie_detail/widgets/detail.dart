@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:my_movie/presentation/movie_detail/widgets/movie_detail.dart';
 import 'package:my_movie/presentation/movie_detail/widgets/video.dart';
 
 class Detail extends StatelessWidget {
-  const Detail({super.key});
+  final String mediaType;
+
+  const Detail({super.key, required this.mediaType});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +13,7 @@ class Detail extends StatelessWidget {
       child: Column(
         children: [
           Video(),
-          // MovieDetail(),
+          MovieDetailWidget(mediaType: mediaType),
         ],
       ),
     );

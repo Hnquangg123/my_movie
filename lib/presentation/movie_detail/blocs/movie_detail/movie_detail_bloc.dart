@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
+import 'package:my_movie/domain/movie_detail/entities/movie_detail.dart';
 import 'package:my_movie/domain/movie_detail/repositories/i_movie_detail_repository.dart';
 
 part 'movie_detail_event.dart';
