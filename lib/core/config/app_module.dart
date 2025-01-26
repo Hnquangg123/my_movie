@@ -8,4 +8,7 @@ abstract class AppModule {
 
   @singleton
   http.Client get httpClient => http.Client();
+
+  @lazySingleton
+  SupabaseClient get supabaseClient => Supabase.instance.client;
 }

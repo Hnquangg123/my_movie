@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_movie/core/config/dependency_injection.dart';
+import 'package:my_movie/presentation/authentication/blocs/navigation/nav_bloc.dart'
+    as nav_bloc;
 import 'package:my_movie/presentation/authentication/screens/home_page.dart';
 import 'package:my_movie/presentation/login/blocs/login_bloc.dart';
 import 'package:my_movie/presentation/login/widgets/email_input_field.dart';
@@ -35,7 +37,12 @@ class _LoginForm extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const HomePage(),
+                builder: (context) {
+                  return BlocProvider(
+                    create: (context) => getIt<nav_bloc.NavBloc>(),
+                    child: const HomePage(),
+                  );
+                },
               ),
             );
           }

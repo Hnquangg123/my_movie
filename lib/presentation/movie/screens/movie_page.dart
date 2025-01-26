@@ -33,16 +33,21 @@ class MovieContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        spacing: 10,
-        children: [
-          // SizedBox(height: 10),
-          // PopularMovies(),
-          TrendingMovies(),
-          NowPlayingMovies(),
-          TvSeries(),
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home'),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          spacing: 10,
+          children: [
+            // SizedBox(height: 10),
+            // PopularMovies(),
+            TrendingMovies(),
+            NowPlayingMovies(),
+            TvSeries(),
+          ],
+        ),
       ),
     );
   }

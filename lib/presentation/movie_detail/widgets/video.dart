@@ -24,7 +24,7 @@ class Video extends StatelessWidget {
             );
           }
           return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.3,
+            // height: MediaQuery.of(context).size.height * 0.3,
             child: FittedBox(
               fit: BoxFit.cover,
               child: Stack(children: [
@@ -42,24 +42,26 @@ class Video extends StatelessWidget {
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  child: ImageFiltered(
-                    imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                    child: ShaderMask(
-                      shaderCallback: (rect) {
-                        return LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.black,
-                            Colors.black.withOpacity(0),
-                          ],
-                          stops: [0.2, 1],
-                        ).createShader(rect);
-                      },
-                      blendMode: BlendMode.dstOut,
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        color: AppColors.scaffoldBackgroundColor,
+                  child: IgnorePointer(
+                    child: ImageFiltered(
+                      imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: ShaderMask(
+                        shaderCallback: (rect) {
+                          return LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.black,
+                              Colors.black.withOpacity(0),
+                            ],
+                            stops: [0.2, 1],
+                          ).createShader(rect);
+                        },
+                        blendMode: BlendMode.dstOut,
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.1,
+                          color: AppColors.scaffoldBackgroundColor,
+                        ),
                       ),
                     ),
                   ),

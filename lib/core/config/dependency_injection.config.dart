@@ -29,6 +29,8 @@ import 'package:my_movie/data/movie_detail/services/fetch_tv_detail_service.dart
     as _i232;
 import 'package:my_movie/data/movie_detail/services/fetch_video_service.dart'
     as _i418;
+import 'package:my_movie/data/profile/repositories/profile_repository.dart'
+    as _i733;
 import 'package:my_movie/domain/authentication/repositories/i_authentication_repository.dart'
     as _i437;
 import 'package:my_movie/domain/movie/repositories/i_movie_repository.dart'
@@ -39,8 +41,12 @@ import 'package:my_movie/domain/movie_detail/repositories/i_tv_detail_repository
     as _i106;
 import 'package:my_movie/domain/movie_detail/repositories/i_video_repository.dart'
     as _i751;
-import 'package:my_movie/presentation/authentication/blocs/auth_bloc.dart'
-    as _i786;
+import 'package:my_movie/domain/profile/repositories/i_profile_repository.dart'
+    as _i390;
+import 'package:my_movie/presentation/authentication/blocs/auth/auth_bloc.dart'
+    as _i687;
+import 'package:my_movie/presentation/authentication/blocs/navigation/nav_bloc.dart'
+    as _i503;
 import 'package:my_movie/presentation/login/blocs/login_bloc.dart' as _i942;
 import 'package:my_movie/presentation/movie/blocs/movie_bloc.dart' as _i585;
 import 'package:my_movie/presentation/movie_detail/blocs/movie_detail/movie_detail_bloc.dart'
@@ -49,6 +55,7 @@ import 'package:my_movie/presentation/movie_detail/blocs/tv_detail/tv_detail_blo
     as _i990;
 import 'package:my_movie/presentation/movie_detail/blocs/video/video_bloc.dart'
     as _i127;
+import 'package:my_movie/presentation/profile/blocs/profile_bloc.dart' as _i294;
 import 'package:my_movie/presentation/registration/blocs/registration_bloc.dart'
     as _i280;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
@@ -66,21 +73,27 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final appModule = _$AppModule();
     gh.factory<_i454.GoTrueClient>(() => appModule.supabaseAuth);
+    gh.factory<_i503.NavBloc>(() => _i503.NavBloc());
     gh.singleton<_i519.Client>(() => appModule.httpClient);
+    gh.lazySingleton<_i454.SupabaseClient>(() => appModule.supabaseClient);
     gh.singleton<_i471.FetchMovieService>(
         () => _i471.FetchMovieService(client: gh<_i519.Client>()));
     gh.lazySingleton<_i924.FetchMovieDetailService>(
         () => _i924.FetchMovieDetailService(client: gh<_i519.Client>()));
-    gh.lazySingleton<_i418.FetchVideoService>(
-        () => _i418.FetchVideoService(client: gh<_i519.Client>()));
     gh.lazySingleton<_i232.FetchTvDetailService>(
         () => _i232.FetchTvDetailService(client: gh<_i519.Client>()));
+    gh.lazySingleton<_i418.FetchVideoService>(
+        () => _i418.FetchVideoService(client: gh<_i519.Client>()));
     gh.factory<_i106.ITvDetailRepository>(() => _i663.TvDetailRepository(
         fetchTvDetailService: gh<_i232.FetchTvDetailService>()));
+    gh.factory<_i390.IProfileRepository>(
+        () => _i733.ProfileRepository(gh<_i454.SupabaseClient>()));
     gh.factory<_i437.IAuthenticationRepository>(
         () => _i249.AuthenticationRepository(gh<_i454.GoTrueClient>()));
     gh.factory<_i1044.IMovieRepository>(() => _i725.MovieRepository(
         fetchMovieService: gh<_i471.FetchMovieService>()));
+    gh.factory<_i294.ProfileBloc>(
+        () => _i294.ProfileBloc(gh<_i390.IProfileRepository>()));
     gh.factory<_i585.MovieBloc>(
         () => _i585.MovieBloc(gh<_i1044.IMovieRepository>()));
     gh.factory<_i372.IMovieDetailRepository>(() => _i846.MovieDetailRepository(
@@ -89,8 +102,8 @@ extension GetItInjectableX on _i174.GetIt {
         fetchVideoService: gh<_i418.FetchVideoService>()));
     gh.factory<_i990.TvDetailBloc>(
         () => _i990.TvDetailBloc(gh<_i106.ITvDetailRepository>()));
-    gh.factory<_i786.AuthBloc>(
-        () => _i786.AuthBloc(gh<_i437.IAuthenticationRepository>()));
+    gh.factory<_i687.AuthBloc>(
+        () => _i687.AuthBloc(gh<_i437.IAuthenticationRepository>()));
     gh.factory<_i942.LoginBloc>(
         () => _i942.LoginBloc(gh<_i437.IAuthenticationRepository>()));
     gh.factory<_i280.RegistrationBloc>(

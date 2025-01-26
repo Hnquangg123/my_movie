@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_movie/core/config/dependency_injection.dart';
 import 'package:my_movie/core/util/app_colors.dart';
 import 'package:my_movie/core/util/app_theme.dart';
-import 'package:my_movie/presentation/authentication/blocs/auth_bloc.dart'
+import 'package:my_movie/presentation/authentication/blocs/auth/auth_bloc.dart'
     as auth_bloc;
+import 'package:my_movie/presentation/authentication/blocs/navigation/nav_bloc.dart' as nav_bloc;
 import 'package:my_movie/presentation/authentication/screens/home_page.dart';
 import 'package:my_movie/presentation/login/screens/login_page.dart';
 import 'package:my_movie/presentation/authentication/screens/splash_screen.dart';
@@ -66,7 +67,12 @@ class MyMovieApp extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const HomePage(),
+                builder: (context) {
+                  return BlocProvider(
+                    create: (context) => getIt<nav_bloc.NavBloc>(),
+                    child: const HomePage(),
+                  );
+                },
               ),
             );
           }

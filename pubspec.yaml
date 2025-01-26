@@ -65,6 +65,7 @@ dependencies:
 
   #Icon for App
   flutter_launcher_icons: ^0.14.2
+  curved_navigation_bar: ^1.0.6
 
 
 
