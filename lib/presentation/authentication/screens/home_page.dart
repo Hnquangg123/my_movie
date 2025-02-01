@@ -15,12 +15,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // title: const Text('My Movie'),
-        actions: [
-          _LogoutButton(),
-        ],
-      ),
       bottomNavigationBar: CurvedNavigationBar(
         onTap: (value) {
           switch (value) {
@@ -76,18 +70,4 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-}
-
-class _LogoutButton extends StatelessWidget {
-  const _LogoutButton();
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: ElevatedButton(
-          onPressed: () =>
-              context.read<AuthBloc>().add(AuthLogoutButtonPressed()),
-          child: const Text('Logout'),
-        ),
-  );
 }

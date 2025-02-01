@@ -101,7 +101,9 @@ class TrendingMovies extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(
-                            '${ImageUrl.tmdbBaseUrlW500}${movies.posterPath}',
+                            movies.posterPath != ''
+                                ? '${ImageUrl.tmdbBaseUrlW500}${movies.posterPath}'
+                                : 'https://dummyimage.com/500x750/cccccc/ffffff&text=No+Image',
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) => Icon(
                               Icons.error,

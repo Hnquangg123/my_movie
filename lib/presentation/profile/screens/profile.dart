@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_movie/core/config/dependency_injection.dart';
+import 'package:my_movie/presentation/authentication/widgets/logout_button.dart';
 import 'package:my_movie/presentation/profile/blocs/profile_bloc.dart';
 import 'package:my_movie/presentation/profile/widgets/profile_form.dart';
 
@@ -30,6 +31,10 @@ class ProfileContent extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(50.0),
+          child: LogoutButton(),
+        ),
       ),
       body: Center(
         child: BlocBuilder<ProfileBloc, ProfileState>(

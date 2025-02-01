@@ -85,21 +85,28 @@ class PopularMovies extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
-                              '${ImageUrl.tmdbBaseUrlW500}${movies.posterPath}',
+                              movies.posterPath != ''
+                                  ? '${ImageUrl.tmdbBaseUrlW500}${movies.posterPath}'
+                                  : 'https://dummyimage.com/500x750/cccccc/ffffff&text=No+Image',
                               fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) => Icon(
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Icon(
                                 Icons.error,
                                 size: 100,
                                 color: AppColors.surfaceColor,
                               ),
-                              loadingBuilder: (context, child, loadingProgress) {
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
                                 if (loadingProgress == null) return child;
                                 return Center(
                                   child: CircularProgressIndicator(
                                     value: loadingProgress.expectedTotalBytes !=
                                             null
-                                        ? loadingProgress.cumulativeBytesLoaded /
-                                            (loadingProgress.expectedTotalBytes ?? 1)
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            (loadingProgress
+                                                    .expectedTotalBytes ??
+                                                1)
                                         : null,
                                   ),
                                 );

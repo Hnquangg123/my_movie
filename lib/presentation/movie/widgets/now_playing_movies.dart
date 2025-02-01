@@ -69,18 +69,18 @@ class NowPlayingMovies extends StatelessWidget {
                       borderRadius: BorderRadius.circular(28),
                     ),
                     onTap: (index) {
-                    final movies = nowPlayingMovies[index];
-                    print('Now Playing Movies: ${movies.title}');
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MovieTVDetail(
-                          movieTVId: movies.id,
-                          mediaType: movies.mediaType,
+                      final movies = nowPlayingMovies[index];
+                      print('Now Playing Movies: ${movies.title}');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MovieTVDetail(
+                            movieTVId: movies.id,
+                            mediaType: movies.mediaType,
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
                     children: List<Widget>.generate(
                       nowPlayingMovies.length,
                       (int index) {
@@ -100,10 +100,12 @@ class NowPlayingMovies extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(0),
                             child: Image.network(
-                              '${ImageUrl.tmdbBaseUrlW500}${movies.posterPath}',
+                              movies.posterPath != ''
+                                  ? '${ImageUrl.tmdbBaseUrlW500}${movies.posterPath}'
+                                  : 'https://dummyimage.com/500x750/cccccc/ffffff&text=No+Image',
                               fit: BoxFit.cover,
-                              errorBuilder:
-                                  (context, error, stackTrace) => Icon(
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Icon(
                                 Icons.error,
                                 size: 100,
                                 color: AppColors.surfaceColor,
@@ -113,8 +115,7 @@ class NowPlayingMovies extends StatelessWidget {
                                 if (loadingProgress == null) return child;
                                 return Center(
                                   child: CircularProgressIndicator(
-                                    value: loadingProgress
-                                                .expectedTotalBytes !=
+                                    value: loadingProgress.expectedTotalBytes !=
                                             null
                                         ? loadingProgress
                                                 .cumulativeBytesLoaded /

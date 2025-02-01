@@ -1,13 +1,64 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:injectable/injectable.dart';
+import 'package:my_movie/domain/search/repositories/i_search_repository.dart';
 
 part 'search_event.dart';
 part 'search_state.dart';
 
+@Injectable()
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
-  SearchBloc() : super(SearchInitial()) {
-    on<SearchEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+  final ISearchRepository _searchRepository;
+
+  SearchBloc(this._searchRepository) : super(SearchInitial()) {
+    on<SearchMovies>(_searchMovies);
+  }
+
+  Future<void> _searchMovies(
+      SearchMovies event, Emitter<SearchState> emit) async {
+    emit(SearchLoading());
+    try {
+      final searchMovies = await _searchRepository.searchMovies(event.query);
+
+      await searchMovies.fold(
+        (failure) async {
+          if (!emit.isDone) emit(SearchError(message: 'Failed to load search'));
+        },
+        (movies) async {
+          final queryEmbedding =
+              await _searchRepository.generateEmbedding(event.query);
+
+          await queryEmbedding.fold(
+            (failure) async {
+              if (!emit.isDone) {
+                emit(SearchError(message: 'Failed to calculate embedding'));
+              }
+            },
+            (embedding) async {
+              // print(movies);
+              // print(embedding);
+              final enrichedMovies = await _searchRepository
+                  .filterMoviesByEmbedding(movies, embedding);
+
+              await enrichedMovies.fold((failure) async {
+                if (!emit.isDone) {
+                  emit(SearchError(message: 'Failed to filter movies'));
+                }
+              }, (enrichedMovies) async {
+                final currentMovies =
+                    state is SearchLoaded ? (state as SearchLoaded).movies : {};
+
+                emit(SearchLoaded(movies: {
+                  ...currentMovies,
+                  'enriched_movies': enrichedMovies
+                }));
+              });
+            },
+          );
+        },
+      );
+    } catch (e) {
+      if (!emit.isDone) emit(SearchError(message: 'Failed to load search'));
+    }
   }
 }
