@@ -34,6 +34,7 @@ import 'package:my_movie/data/profile/repositories/profile_repository.dart'
 import 'package:my_movie/data/search/repositories/search_repository.dart'
     as _i823;
 import 'package:my_movie/data/search/services/open_ai_service.dart' as _i355;
+import 'package:my_movie/data/load_data/services/supabase_service.dart' as _i402;
 import 'package:my_movie/data/search/services/tmdb_service.dart' as _i859;
 import 'package:my_movie/domain/authentication/repositories/i_authentication_repository.dart'
     as _i437;
@@ -65,6 +66,7 @@ import 'package:my_movie/presentation/profile/blocs/profile_bloc.dart' as _i294;
 import 'package:my_movie/presentation/registration/blocs/registration_bloc.dart'
     as _i280;
 import 'package:my_movie/presentation/search/blocs/search_bloc.dart' as _i402;
+import 'package:supabase/supabase.dart' as _i590;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -83,6 +85,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i503.NavBloc>(() => _i503.NavBloc());
     gh.singleton<_i519.Client>(() => appModule.httpClient);
     gh.lazySingleton<_i454.SupabaseClient>(() => appModule.supabaseClient);
+    gh.lazySingleton<_i402.SupabaseService>(
+        () => _i402.SupabaseService(client: gh<_i590.SupabaseClient>()));
     gh.singleton<_i471.FetchMovieService>(
         () => _i471.FetchMovieService(client: gh<_i519.Client>()));
     gh.singleton<_i355.OpenAIService>(
@@ -107,16 +111,17 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i294.ProfileBloc(gh<_i390.IProfileRepository>()));
     gh.factory<_i585.MovieBloc>(
         () => _i585.MovieBloc(gh<_i1044.IMovieRepository>()));
-    gh.factory<_i96.ISearchRepository>(() => _i823.SearchRepository(
-          tmdbService: gh<_i859.TMDBService>(),
-          openAIService: gh<_i355.OpenAIService>(),
-        ));
     gh.factory<_i372.IMovieDetailRepository>(() => _i846.MovieDetailRepository(
         fetchMovieDetailService: gh<_i924.FetchMovieDetailService>()));
     gh.factory<_i751.IVideoRepository>(() => _i102.VideoRepository(
         fetchVideoService: gh<_i418.FetchVideoService>()));
     gh.factory<_i990.TvDetailBloc>(
         () => _i990.TvDetailBloc(gh<_i106.ITvDetailRepository>()));
+    gh.factory<_i96.ISearchRepository>(() => _i823.SearchRepository(
+          tmdbService: gh<_i859.TMDBService>(),
+          openAIService: gh<_i355.OpenAIService>(),
+          supabaseService: gh<_i402.SupabaseService>(),
+        ));
     gh.factory<_i402.SearchBloc>(
         () => _i402.SearchBloc(gh<_i96.ISearchRepository>()));
     gh.factory<_i687.AuthBloc>(

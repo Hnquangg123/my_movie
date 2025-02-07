@@ -17,3 +17,22 @@ class SearchMovies extends SearchEvent {
 }
 
 
+class SearchMoviesEmbedding extends SearchEvent {
+  final String query;
+
+  const SearchMoviesEmbedding({required this.query});
+
+  @override
+  List<Object> get props => [query];
+}
+
+// class IntegrateMoviesToDatabase extends SearchEvent {
+//   final String query;
+
+//   const IntegrateMoviesToDatabase({required this.query});
+
+//   @override
+//   List<Object> get props => [query];
+// }
+
+

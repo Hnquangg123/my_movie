@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_movie/core/config/dependency_injection.dart';
 import 'package:my_movie/core/util/app_colors.dart';
@@ -52,6 +53,8 @@ class SearchPage extends StatelessWidget {
       //   },
       // );
       final interestedMovies = state.movies['enriched_movies'] ?? [];
+      final width = MediaQuery.of(context).size.width;
+      final height = MediaQuery.of(context).size.height;
       return SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,10 +78,10 @@ class SearchPage extends StatelessWidget {
             ConstrainedBox(
               // 0.45 for 1.3.1
               constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.65),
+                  maxHeight: MediaQuery.of(context).size.height * 0.75),
               // height: MediaQuery.of(context).size.height * 0.65,
               child: CarouselView.weighted(
-                flexWeights: [1, 1, 1],
+                flexWeights: [2, 1, 1],
                 itemSnapping: true,
                 // controller: CarouselController(
                 //   initialItem: 1,
@@ -113,32 +116,81 @@ class SearchPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          movies['poster_path'] != ''
-                              ? '${ImageUrl.tmdbBaseUrlW500}${movies['poster_path']}'
-                              : 'https://dummyimage.com/500x750/cccccc/ffffff&text=No+Image',
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) => Icon(
-                            Icons.error,
-                            size: 100,
-                            color: AppColors.surfaceColor,
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: OverflowBox(
+                              maxWidth: width * 0.5,
+                              minWidth: width * 0.5,
+                              fit: OverflowBoxFit.deferToChild,
+                              child: Image.network(
+                                movies['poster_path'] != ''
+                                    ? '${ImageUrl.tmdbBaseUrlW500}${movies['poster_path']}'
+                                    : 'https://dummyimage.com/500x750/cccccc/ffffff&text=No+Image',
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Icon(
+                                  Icons.error,
+                                  size: 100,
+                                  color: AppColors.surfaceColor,
+                                ),
+                                loadingBuilder:
+                                    (context, child, loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  (loadingProgress
+                                                          .expectedTotalBytes ??
+                                                      1)
+                                              : null,
+                                    ),
+                                  );
+                                },
+                              ),                                
+                            ),
                           ),
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        (loadingProgress.expectedTotalBytes ??
-                                            1)
-                                    : null,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(18.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                spacing: 10,
+                                children: <Widget>[
+                                  Flexible(
+                                    child: Text(
+                                      movies['title'],
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      softWrap: false,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineLarge
+                                          ?.copyWith(color: Colors.white),
+                                    ),
+                                  ),  
+                                  Flexible(
+                                    child: Text(
+                                      movies['release_date'] ?? 'No release date',
+                                      overflow: TextOverflow.clip,
+                                      softWrap: false,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(color: Colors.white),
+                                    ),
+                                  )
+                                ],
                               ),
-                            );
-                          },
-                        ),
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   },

@@ -80,19 +80,22 @@ class MovieDetailWidget extends StatelessWidget {
                       child: Row(
                         spacing: 8,
                         children: [
-                          Text(
-                            movieDetail.title,
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primaryColor,
-                              shadows: [
-                                Shadow(
-                                  color: Colors.black45,
-                                  offset: Offset(2, 2),
-                                  blurRadius: 10.0,
-                                ),
-                              ],
+                          Flexible(
+                            child: Text(
+                              movieDetail.title,
+                              maxLines: 2,
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.primaryColor,
+                                shadows: [
+                                  Shadow(
+                                    color: Colors.black45,
+                                    offset: Offset(2, 2),
+                                    blurRadius: 10.0,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           Text(
@@ -236,19 +239,21 @@ class MovieDetailWidget extends StatelessWidget {
                       child: Row(
                         spacing: 8,
                         children: [
-                          Text(
-                            tvDetail.name,
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primaryColor,
-                              shadows: [
-                                Shadow(
-                                  color: Colors.black45,
-                                  offset: Offset(2, 2),
-                                  blurRadius: 10.0,
-                                ),
-                              ],
+                          Flexible(
+                            child: Text(
+                              tvDetail.name,
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.primaryColor,
+                                shadows: [
+                                  Shadow(
+                                    color: Colors.black45,
+                                    offset: Offset(2, 2),
+                                    blurRadius: 10.0,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           Text(

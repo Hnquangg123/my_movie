@@ -9,6 +9,8 @@ import 'package:my_movie/presentation/authentication/blocs/navigation/nav_bloc.d
 import 'package:my_movie/presentation/authentication/screens/home_page.dart';
 import 'package:my_movie/presentation/login/screens/login_page.dart';
 import 'package:my_movie/presentation/authentication/screens/splash_screen.dart';
+import 'package:my_movie/presentation/search/blocs/search_bloc.dart';
+import 'package:my_movie/presentation/search/screens/search.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -23,9 +25,15 @@ Future<void> main() async {
 
   configureDependencies();
 
-  runApp(BlocProvider(
-    create: (_) =>
-        getIt<auth_bloc.AuthBloc>()..add(auth_bloc.AuthInitialCheckRequested()),
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (context) => getIt<auth_bloc.AuthBloc>()..add(auth_bloc.AuthInitialCheckRequested()),
+      ),
+      // BlocProvider(
+      //   create: (context) => getIt<SearchBloc>()..add(IntegrateMoviesToDatabase(query: '')),
+      // ),
+    ],
     child: const MyMovieApp(),
   ));
 }

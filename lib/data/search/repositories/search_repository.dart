@@ -5,6 +5,8 @@ import 'package:injectable/injectable.dart';
 import 'package:my_movie/core/error/failure.dart';
 import 'package:my_movie/data/search/services/open_ai_service.dart';
 import 'package:my_movie/data/search/services/tmdb_service.dart';
+import 'package:my_movie/data/load_data/services/supabase_service.dart';
+
 import 'package:my_movie/domain/movie/entities/movie.dart';
 import 'package:my_movie/domain/search/repositories/i_search_repository.dart';
 
@@ -12,8 +14,13 @@ import 'package:my_movie/domain/search/repositories/i_search_repository.dart';
 class SearchRepository implements ISearchRepository {
   final TMDBService tmdbService;
   final OpenAIService openAIService;
+  final SupabaseService supabaseService;
 
-  SearchRepository({required this.tmdbService, required this.openAIService});
+  SearchRepository({
+    required this.tmdbService,
+    required this.openAIService,
+    required this.supabaseService,
+  });
 
   @override
   Future<Either<Failure, List<dynamic>>> searchMovies(String query) async {
@@ -75,10 +82,12 @@ class SearchRepository implements ISearchRepository {
         },
       ));
 
-      // print(enrichedMovies);
+      print(enrichedMovies);
 
       enrichedMovies.sort((a, b) =>
           (b['similarity'] as double).compareTo(a['similarity'] as double));
+
+      print('Sort: $enrichedMovies');
 
       return Right(enrichedMovies.take(10).toList());
     } catch (e) {
@@ -97,4 +106,6 @@ class SearchRepository implements ISearchRepository {
     final magnitudeB = sqrt(vectorB.map((v) => v * v).reduce((a, b) => a + b));
     return dotProduct / (magnitudeA * magnitudeB);
   }
+
+
 }

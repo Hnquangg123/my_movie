@@ -24,7 +24,7 @@ class SearchBarWidget extends StatelessWidget {
         if (state is SearchLoading) {
           return SearchAnchor.bar(
             onSubmitted: (value) {
-              context.read<SearchBloc>().add(SearchMovies(query: value));
+              context.read<SearchBloc>().add(SearchMoviesEmbedding(query: value));
             },
             suggestionsBuilder: (context, searchController) {
               return [
@@ -41,10 +41,10 @@ class SearchBarWidget extends StatelessWidget {
 
         return SearchAnchor.bar(
           onSubmitted: (value) {
-            context.read<SearchBloc>().add(SearchMovies(query: value));
+            context.read<SearchBloc>().add(SearchMoviesEmbedding(query: value));
           },
           onChanged: (value) {
-            context.read<SearchBloc>().add(SearchMovies(query: value));
+            // context.read<SearchBloc>().add(SearchMoviesEmbedding(query: value));
           },
           suggestionsBuilder: (context, controller) {
             return suggestions.map((movie) {
@@ -56,6 +56,7 @@ class SearchBarWidget extends StatelessWidget {
                 ),
                 title: Text(movie['title']),
                 subtitle: Text(movie['release_date'] ?? 'No release date'),
+                
                 onTap: () {
                   Navigator.push(
                     context,

@@ -11,4 +11,5 @@ abstract class ISearchRepository {
     List<double> queryEmbedding,
   );
   double cosineSimilarity(List<double> vectorA, List<double> vectorB);
+
 }
