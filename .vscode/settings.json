@@ -20,5 +20,8 @@
     "fs",
     "http",
     "net"
+  ],
+  "cSpell.words": [
+    "tmdb"
   ]
 }

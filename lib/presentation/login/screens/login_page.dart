@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_movie/core/config/dependency_injection.dart';
+import 'package:my_movie/core/util/app_colors.dart';
 import 'package:my_movie/presentation/authentication/blocs/navigation/nav_bloc.dart'
     as nav_bloc;
 import 'package:my_movie/presentation/authentication/screens/home_page.dart';
@@ -10,6 +11,8 @@ import 'package:my_movie/presentation/login/widgets/email_input_field.dart';
 import 'package:my_movie/presentation/login/widgets/login_button.dart';
 import 'package:my_movie/presentation/login/widgets/password_input_field.dart';
 import 'package:my_movie/presentation/registration/screens/registration_page.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -88,7 +91,49 @@ class _LoginForm extends StatelessWidget {
                       ),
                     )
                   ],
-                )
+                ),
+                SizedBox(height: 16.0),
+                GestureDetector(
+                  onTap: () async {
+                    try {
+                      final GoogleSignInAccount? googleUser =
+                          await GoogleSignIn().signIn();
+                      if (googleUser != null) {
+                        // Handle successful Google sign-in
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return BlocProvider(
+                                create: (context) => getIt<nav_bloc.NavBloc>(),
+                                child: const HomePage(),
+                              );
+                            },
+                          ),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text(
+                                  "Signed in as ${googleUser.displayName}")),
+                        );
+                      }
+                    } catch (error) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text("Google sign-in failed: $error")),
+                      );
+                      print(error);
+                    }
+                  },
+                  child: CircleAvatar(
+                    radius: 24,
+                    backgroundColor: Colors.white,
+                    child: FaIcon(
+                      FontAwesomeIcons.google,
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

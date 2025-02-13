@@ -34,7 +34,7 @@ import 'package:my_movie/data/profile/repositories/profile_repository.dart'
 import 'package:my_movie/data/search/repositories/search_repository.dart'
     as _i823;
 import 'package:my_movie/data/search/services/open_ai_service.dart' as _i355;
-import 'package:my_movie/data/load_data/services/supabase_service.dart' as _i402;
+
 import 'package:my_movie/data/search/services/tmdb_service.dart' as _i859;
 import 'package:my_movie/domain/authentication/repositories/i_authentication_repository.dart'
     as _i437;
@@ -85,8 +85,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i503.NavBloc>(() => _i503.NavBloc());
     gh.singleton<_i519.Client>(() => appModule.httpClient);
     gh.lazySingleton<_i454.SupabaseClient>(() => appModule.supabaseClient);
-    gh.lazySingleton<_i402.SupabaseService>(
-        () => _i402.SupabaseService(client: gh<_i590.SupabaseClient>()));
+
     gh.singleton<_i471.FetchMovieService>(
         () => _i471.FetchMovieService(client: gh<_i519.Client>()));
     gh.singleton<_i355.OpenAIService>(
@@ -120,7 +119,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i96.ISearchRepository>(() => _i823.SearchRepository(
           tmdbService: gh<_i859.TMDBService>(),
           openAIService: gh<_i355.OpenAIService>(),
-          supabaseService: gh<_i402.SupabaseService>(),
         ));
     gh.factory<_i402.SearchBloc>(
         () => _i402.SearchBloc(gh<_i96.ISearchRepository>()));

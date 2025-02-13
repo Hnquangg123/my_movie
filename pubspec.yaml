@@ -67,6 +67,12 @@ dependencies:
   flutter_launcher_icons: ^0.14.2
   curved_navigation_bar: ^1.0.6
 
+  #Google Sign In
+  google_sign_in: ^6.2.2
+
+  #Font Awesome
+  font_awesome_flutter: ^10.8.0
+
 
 
 dev_dependencies:

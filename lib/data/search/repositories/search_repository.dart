@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:my_movie/core/error/failure.dart';
 import 'package:my_movie/data/search/services/open_ai_service.dart';
 import 'package:my_movie/data/search/services/tmdb_service.dart';
-import 'package:my_movie/data/load_data/services/supabase_service.dart';
+
 
 import 'package:my_movie/domain/movie/entities/movie.dart';
 import 'package:my_movie/domain/search/repositories/i_search_repository.dart';
@@ -14,12 +14,10 @@ import 'package:my_movie/domain/search/repositories/i_search_repository.dart';
 class SearchRepository implements ISearchRepository {
   final TMDBService tmdbService;
   final OpenAIService openAIService;
-  final SupabaseService supabaseService;
 
   SearchRepository({
     required this.tmdbService,
     required this.openAIService,
-    required this.supabaseService,
   });
 
   @override
