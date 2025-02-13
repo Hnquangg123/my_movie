@@ -11,6 +11,8 @@ abstract class IAuthenticationRepository {
     required String password,
   });
 
+  Future<AuthResponse> signInWithGoogle();
+
   Future<void> signOut();
 
   Stream<User?> getCurrentUser();

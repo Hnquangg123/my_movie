@@ -20,3 +20,5 @@ class LoginPasswordChanged extends LoginEvent {
 }
 
 class LoginButtonPressed extends LoginEvent {}
+
+class GoogleIconPressed extends LoginEvent {}
