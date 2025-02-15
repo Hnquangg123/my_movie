@@ -26,13 +26,6 @@ class SearchMoviesEmbedding extends SearchEvent {
   List<Object> get props => [query];
 }
 
-// class IntegrateMoviesToDatabase extends SearchEvent {
-//   final String query;
 
-//   const IntegrateMoviesToDatabase({required this.query});
-
-//   @override
-//   List<Object> get props => [query];
-// }
 
 

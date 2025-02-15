@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 class OpenAIService {
   final http.Client client;
 
-  final apikey = '';  
+  final apiKey = '';  
 
   OpenAIService({required this.client});
 
@@ -16,7 +16,7 @@ class OpenAIService {
     final response = await client.post(
       Uri.parse('https://api.openai.com/v1/embeddings'),
       headers: {
-        'Authorization': 'Bearer $apikey',
+        'Authorization': 'Bearer $apiKey',
         'Content-Type': 'application/json',
       },
       body: jsonEncode({

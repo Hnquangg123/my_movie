@@ -52,7 +52,7 @@ class SearchPage extends StatelessWidget {
       //     );
       //   },
       // );
-      final interestedMovies = state.movies['enriched_movies'] ?? [];
+      final interestedMovies = state.movies['movies'] ?? [];
       final width = MediaQuery.of(context).size.width;
       final height = MediaQuery.of(context).size.height;
       return SingleChildScrollView(
@@ -65,7 +65,7 @@ class SearchPage extends StatelessWidget {
                 spacing: 8,
                 children: [
                   Text(
-                    'You might interested',
+                    'Your searching movies',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -89,13 +89,13 @@ class SearchPage extends StatelessWidget {
                 scrollDirection: Axis.vertical,
                 onTap: (index) {
                   final movies = interestedMovies[index];
-                  print('Interested Movies: ${movies['title']}');
+                  print('Interested Movies: ${movies.title}');
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => MovieTVDetail(
-                        movieTVId: movies['id'],
-                        mediaType: movies['media_type'],
+                        movieTVId: movies.id,
+                        mediaType: movies.mediaType,
                       ),
                     ),
                   );
@@ -125,8 +125,8 @@ class SearchPage extends StatelessWidget {
                               minWidth: width * 0.5,
                               fit: OverflowBoxFit.deferToChild,
                               child: Image.network(
-                                movies['poster_path'] != ''
-                                    ? '${ImageUrl.tmdbBaseUrlW500}${movies['poster_path']}'
+                                movies.posterPath != ''
+                                    ? '${ImageUrl.tmdbBaseUrlW500}${movies.posterPath}'
                                     : 'https://dummyimage.com/500x750/cccccc/ffffff&text=No+Image',
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) =>
@@ -152,7 +152,7 @@ class SearchPage extends StatelessWidget {
                                     ),
                                   );
                                 },
-                              ),                                
+                              ),
                             ),
                           ),
                           Expanded(
@@ -165,7 +165,7 @@ class SearchPage extends StatelessWidget {
                                 children: <Widget>[
                                   Flexible(
                                     child: Text(
-                                      movies['title'],
+                                      movies.title,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 2,
                                       softWrap: false,
@@ -174,10 +174,14 @@ class SearchPage extends StatelessWidget {
                                           .headlineLarge
                                           ?.copyWith(color: Colors.white),
                                     ),
-                                  ),  
+                                  ),
                                   Flexible(
                                     child: Text(
-                                      movies['release_date'] ?? 'No release date',
+                                      movies.mediaType == 'movie'
+                                          ? movies.releaseDate
+                                          : movies.mediaType == 'tv'
+                                              ? movies.firstAirDate
+                                              : 'No Release Date',
                                       overflow: TextOverflow.clip,
                                       softWrap: false,
                                       style: Theme.of(context)

@@ -15,55 +15,51 @@ class SearchBarWidget extends StatelessWidget {
       builder: (context, state) {
         List<dynamic> suggestions = [];
 
-        // print(state);
+        return SearchAnchor.bar(
+          searchController: searchController,
+          onSubmitted: (value) {
+            searchController.closeView(value);
+            context.read<SearchBloc>().add(SearchMovies(query: value));
+            // _refreshSuggestions(_searchController);
+          },
+          suggestionsBuilder: (context, controller) {
+            if (state is SearchInitial) {
+              suggestions = [];
+            }
 
-        if (state is SearchInitial) {
-          suggestions = [];
-        }
-
-        if (state is SearchLoading) {
-          return SearchAnchor.bar(
-            onSubmitted: (value) {
-              context.read<SearchBloc>().add(SearchMoviesEmbedding(query: value));
-            },
-            suggestionsBuilder: (context, searchController) {
+            if (state is SearchLoaded) {
+              suggestions = state.movies['movies'] ?? [];
+            }
+            if (state is SearchLoading) {
               return [
                 Center(
                   child: CircularProgressIndicator(),
                 ),
               ];
-            },
-          );
-        }
-        if (state is SearchLoaded) {
-          suggestions = state.movies['enriched_movies'] ?? [];
-        }
+            }
 
-        return SearchAnchor.bar(
-          onSubmitted: (value) {
-            context.read<SearchBloc>().add(SearchMoviesEmbedding(query: value));
-          },
-          onChanged: (value) {
-            // context.read<SearchBloc>().add(SearchMoviesEmbedding(query: value));
-          },
-          suggestionsBuilder: (context, controller) {
+            // return getSuggestions(context, controller, suggestions);
+
             return suggestions.map((movie) {
               return ListTile(
                 leading: Image.network(
-                  movie['poster_path'] != ''
-                      ? 'https://image.tmdb.org/t/p/w200${movie['poster_path']}'
+                  movie.posterPath != ''
+                      ? 'https://image.tmdb.org/t/p/w200${movie.posterPath}'
                       : 'https://dummyimage.com/500x750/cccccc/ffffff&text=No+Image',
                 ),
-                title: Text(movie['title']),
-                subtitle: Text(movie['release_date'] ?? 'No release date'),
-                
+                title: Text(movie.title),
+                subtitle: Text(movie.mediaType == 'movie'
+                    ? movie.releaseDate
+                    : movie.mediaType == 'tv'
+                        ? movie.firstAirDate
+                        : 'No Release Date'),
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => MovieTVDetail(
-                        movieTVId: movie['id'],
-                        mediaType: movie['media_type'],
+                        movieTVId: movie.id,
+                        mediaType: movie.mediaType,
                       ),
                     ),
                   );
@@ -75,4 +71,42 @@ class SearchBarWidget extends StatelessWidget {
       },
     );
   }
+
+  // void _refreshSuggestions(SearchController controller) {
+  //   const String zeroWidthSpace = '\u200B';
+  //   final previousText = controller.text;
+  //   controller.text =
+  //       '$zeroWidthSpace$previousText'; // This will trigger updateSuggestions and call `suggestionsBuilder`.
+  //   controller.text = previousText;
+  // }
+
+  // Iterable<Widget> getSuggestions(BuildContext context,
+  //     SearchController controller, List<dynamic> suggestions) {
+  //   return suggestions.map((movie) {
+  //     return ListTile(
+  //       leading: Image.network(
+  //         movie.posterPath != ''
+  //             ? 'https://image.tmdb.org/t/p/w200${movie.posterPath}'
+  //             : 'https://dummyimage.com/500x750/cccccc/ffffff&text=No+Image',
+  //       ),
+  //       title: Text(movie.title),
+  //       subtitle: Text(movie.mediaType == 'movie'
+  //           ? movie.releaseDate
+  //           : movie.mediaType == 'tv'
+  //               ? movie.firstAirDate
+  //               : 'No Release Date'),
+  //       onTap: () {
+  //         Navigator.push(
+  //           context,
+  //           MaterialPageRoute(
+  //             builder: (context) => MovieTVDetail(
+  //               movieTVId: movie.id,
+  //               mediaType: movie.mediaType,
+  //             ),
+  //           ),
+  //         );
+  //       },
+  //     );
+  //   }).toList();
+  // }
 }

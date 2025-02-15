@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:my_movie/domain/search/repositories/i_search_repository.dart';
 
@@ -13,7 +14,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc(this._searchRepository) : super(SearchInitial()) {
     on<SearchMoviesEmbedding>(_searchMoviesEmbedding);
     on<SearchMovies>(_searchMovies);
-    // on<IntegrateMoviesToDatabase>(_integrateMoviesToDatabase);
   }
 
   Future<void> _searchMovies(
@@ -27,7 +27,17 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           if (!emit.isDone) emit(SearchError(message: 'Failed to load search'));
         },
         (movies) async {
-          emit(SearchLoaded(movies: {'movies': movies}));
+          final currentSearchMovies =
+              state is SearchLoaded ? (state as SearchLoaded).movies : {};
+
+          emit(SearchLoaded(
+            movies: {
+              ...currentSearchMovies,
+              'movies': movies,
+            },
+          ));
+          // final data = (state as SearchLoaded).movies['movies'];
+          // data?.forEach((movie) => print('Data: ${movie.mediaType}'),);
         },
       );
     } catch (e) {
@@ -68,7 +78,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
                   emit(SearchError(message: 'Failed to filter movies'));
                 }
               }, (enrichedMovies) async {
-
                 // print('Vector Movies: $movies');
 
                 final currentMovies =
@@ -87,6 +96,4 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       if (!emit.isDone) emit(SearchError(message: 'Failed to load search'));
     }
   }
-
-  
 }
