@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:my_movie/core/error/failure.dart';
+import 'package:my_movie/data/search/services/supabase_service.dart';
 import 'package:my_movie/data/search/services/open_ai_service.dart';
 import 'package:my_movie/data/search/services/tmdb_service.dart';
-
 
 import 'package:my_movie/domain/movie/entities/movie.dart';
 import 'package:my_movie/domain/search/repositories/i_search_repository.dart';
@@ -14,10 +14,12 @@ import 'package:my_movie/domain/search/repositories/i_search_repository.dart';
 class SearchRepository implements ISearchRepository {
   final TMDBService tmdbService;
   final OpenAIService openAIService;
+  final SupabaseService supabaseServices;
 
   SearchRepository({
     required this.tmdbService,
     required this.openAIService,
+    required this.supabaseServices,
   });
 
   @override
@@ -25,6 +27,16 @@ class SearchRepository implements ISearchRepository {
     try {
       final searchMovies = await tmdbService.searchMovies(query);
       return Right(searchMovies);
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> storeSearchHistory(String query) async {
+    try {
+      await supabaseServices.storeSearchHistory(query);
+      return Right(null);
     } catch (e) {
       return Left(ServerFailure(message: e.toString()));
     }
@@ -104,6 +116,4 @@ class SearchRepository implements ISearchRepository {
     final magnitudeB = sqrt(vectorB.map((v) => v * v).reduce((a, b) => a + b));
     return dotProduct / (magnitudeA * magnitudeB);
   }
-
-
 }

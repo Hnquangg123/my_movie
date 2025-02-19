@@ -29,6 +29,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         (movies) async {
           final currentSearchMovies =
               state is SearchLoaded ? (state as SearchLoaded).movies : {};
+          
+          await _searchRepository.storeSearchHistory(event.query);
 
           emit(SearchLoaded(
             movies: {
