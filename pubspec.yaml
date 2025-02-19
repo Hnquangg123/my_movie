@@ -31,8 +31,49 @@ dependencies:
   flutter:
     sdk: flutter
 
+  #ThemeByDefault
   cupertino_icons: ^1.0.8
+
+  #Database
   supabase_flutter: ^2.8.0
+
+  #State Management
+  flutter_bloc: ^9.0.0
+
+  #Comparing Dart Object
+  equatable: ^2.0.7
+
+  #Dependency Injection
+  get_it: ^8.0.1
+  injectable: ^2.5.0
+
+  #DateFormat
+  intl: ^0.19.0
+
+  #Hooks
+  flutter_hooks: ^0.20.5
+
+  #Blurring effect
+  flutter_blurhash: ^0.6.0
+  dartz: ^0.10.1
+
+  #API
+  http: ^1.2.2
+
+  #Youtube Player
+  youtube_player_flutter: ^9.1.1
+
+  #Icon for App
+  flutter_launcher_icons: ^0.14.2
+  curved_navigation_bar: ^1.0.6
+
+  #Google Sign In
+  google_sign_in: ^6.2.2
+
+  #Font Awesome
+  font_awesome_flutter: ^10.8.0
+
+
 
 dev_dependencies:
   flutter_test:
@@ -44,6 +85,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+  injectable_generator:
+  build_runner:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -57,9 +100,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/background.jpg
+    - assets/images/logo.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
