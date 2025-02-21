@@ -12,3 +12,5 @@ class NavigateHomePage extends NavEvent {}
 class NavigateProfilePage extends NavEvent {}
 
 class NavigateSearchPage extends NavEvent {}
+
+class NavigateRecommendationPage extends NavEvent {}

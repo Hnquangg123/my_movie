@@ -1,0 +1,2 @@
+C:/Users/Dell/Develop/Flutter/Project/my_movie/android/app/.cxx/Debug/2a4w82j5/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/Dell/Develop/Flutter/Project/my_movie/android/app/.cxx/Debug/2a4w82j5/armeabi-v7a/CMakeFiles/rebuild_cache.dir

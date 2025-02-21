@@ -1,6 +1,6 @@
 part of 'nav_bloc.dart';
 
-enum OnPage { navigateHomePage, navigateProfilePage, navigateSearchPage }
+enum OnPage { navigateHomePage, navigateProfilePage, navigateSearchPage, navigateRecommendationPage }
 
 sealed class NavState extends Equatable {
   @override
@@ -25,6 +25,13 @@ final class Profile extends NavState {
 
 final class Search extends NavState {
   OnPage get title => OnPage.navigateSearchPage;
+
+  @override
+  List<Object> get props => [title];
+}
+
+final class Recommendation extends NavState {
+  OnPage get title => OnPage.navigateRecommendationPage;
 
   @override
   List<Object> get props => [title];

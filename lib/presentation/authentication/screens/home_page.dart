@@ -7,6 +7,7 @@ import 'package:my_movie/presentation/authentication/blocs/navigation/nav_bloc.d
 import 'package:my_movie/presentation/login/screens/login_page.dart';
 import 'package:my_movie/presentation/movie/screens/movie_page.dart';
 import 'package:my_movie/presentation/profile/screens/profile.dart';
+import 'package:my_movie/presentation/recommendation/screens/recommendation.dart';
 import 'package:my_movie/presentation/search/screens/search.dart';
 
 class HomePage extends StatelessWidget {
@@ -27,12 +28,16 @@ class HomePage extends StatelessWidget {
             case 2:
               context.read<NavBloc>().add(NavigateProfilePage());
               break;
+            case 3:
+              context.read<NavBloc>().add(NavigateRecommendationPage());
+              break;
           }
         },
         items: <Widget>[
           Icon(Icons.search),
           Icon(Icons.movie),
           Icon(Icons.person),
+          Icon(Icons.recommend),
         ],
         height: MediaQuery.of(context).size.height * 0.07,
         index: 1,
@@ -62,6 +67,9 @@ class HomePage extends StatelessWidget {
               }
               if (state is Profile) {
                 return ProfilePage();
+              }
+              if (state is Recommendation) {
+                return RecommendationPage();
               }
               return MoviePage();
             },

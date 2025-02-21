@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Recommendation extends StatelessWidget {
-  const Recommendation({super.key});
+class RecommendationPage extends StatelessWidget {
+  const RecommendationPage({super.key});
 
   @override
   Widget build(BuildContext context) {

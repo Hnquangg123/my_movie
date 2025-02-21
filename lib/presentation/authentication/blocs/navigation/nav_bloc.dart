@@ -11,6 +11,7 @@ class NavBloc extends Bloc<NavEvent, NavState> {
     on<NavigateHomePage>(_onNavigateHomePage);
     on<NavigateProfilePage>(_onNavigateProfilePage);
     on<NavigateSearchPage>(_onNavigateSearchPage);
+    on<NavigateRecommendationPage>(_onNavigateRecommendationPage);
   }
 
   Future<void> _onNavigateHomePage(
@@ -26,5 +27,10 @@ class NavBloc extends Bloc<NavEvent, NavState> {
   Future<void> _onNavigateSearchPage(
       NavigateSearchPage event, Emitter<NavState> emit) async {
     emit(Search());
+  }
+
+  Future<void> _onNavigateRecommendationPage(
+      NavigateRecommendationPage event, Emitter<NavState> emit) async {
+    emit(Recommendation());
   }
 }
