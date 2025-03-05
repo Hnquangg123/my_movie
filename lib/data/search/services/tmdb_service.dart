@@ -36,6 +36,7 @@ class TMDBService {
             overview: movie['overview'] ?? 'No overview available',
             posterPath: movie['poster_path'] ?? '',
             releaseDate: movie['release_date'] ?? 'Unknown',
+            
           );
         } else {
           return TV(

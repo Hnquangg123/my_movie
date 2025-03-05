@@ -20,6 +20,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
     on<RegistrationEmailAddressChanged>(_onEmailAddressChanged);
     on<RegistrationPasswordChanged>(_onPasswordChanged);
     on<RegistrationConfirmPasswordChanged>(_onConfirmPasswordChanged);
+    on<RegistrationTickPolicyChanged>(_onTickPolicyChanged);
   }
 
   Future<void> _onRegistrationRegisterButtonPressed(
@@ -73,6 +74,15 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
       Emitter<RegistrationState> emit) async {
     emit(state.copyWith(
       confirmPassword: Password.create(event.value!),
+      formSubmissionStatus: FormSubmissionStatus.initial,
+    ));
+  }
+
+  Future<void> _onTickPolicyChanged(
+      RegistrationTickPolicyChanged event,
+      Emitter<RegistrationState> emit) async {
+    emit(state.copyWith(
+      tickPolicy: event.value,
       formSubmissionStatus: FormSubmissionStatus.initial,
     ));
   }

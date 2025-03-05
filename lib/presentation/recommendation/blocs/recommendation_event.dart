@@ -1,8 +1,8 @@
 part of 'recommendation_bloc.dart';
 
-sealed class RecommendationEvent extends Equatable {
-  const RecommendationEvent();
+abstract class RecommendationEvent {}
 
-  @override
-  List<Object> get props => [];
+class LoadRecommendations extends RecommendationEvent {
+
+  LoadRecommendations();
 }

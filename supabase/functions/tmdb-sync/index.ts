@@ -3,7 +3,7 @@ import { createClient } from "jsr:@supabase/supabase-js@2";
 import { config } from "https://deno.land/x/dotenv@v3.2.2/mod.ts";
 
 const env = config({
-  path: "D:/Develop/Flutter/Project/my_movie/supabase/functions/tmdb-sync/.env",
+  path: "C:/Users/Dell/Develop/Flutter/Project/my_movie/.env",
 });
 
 const supabase = createClient(

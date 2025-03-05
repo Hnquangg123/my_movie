@@ -6,6 +6,7 @@ import 'package:my_movie/presentation/movie/blocs/movie_bloc.dart';
 import 'package:my_movie/presentation/movie/widgets/now_playing_movies.dart';
 import 'package:my_movie/presentation/movie/widgets/trending_movies.dart';
 import 'package:my_movie/presentation/movie/widgets/tv_series.dart';
+import 'package:rive/rive.dart';
 
 class MoviePage extends StatelessWidget {
   const MoviePage({super.key});
@@ -37,17 +38,23 @@ class MovieContent extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home'),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          spacing: 10,
-          children: [
-            // SizedBox(height: 10),
-            // PopularMovies(),
-            TrendingMovies(),
-            NowPlayingMovies(),
-            TvSeries(),
-          ],
-        ),
+      body: BlocBuilder<MovieBloc, MovieState>(
+        builder: (context, state) {
+          return state is MovieLoading
+              ? RiveAnimation.asset('assets/animation/loading.riv')
+              : SingleChildScrollView(
+                  child: Column(
+                    spacing: 10,
+                    children: [
+                      // SizedBox(height: 10),
+                      // PopularMovies(),
+                      TrendingMovies(),
+                      NowPlayingMovies(),
+                      TvSeries(),
+                    ],
+                  ),
+                );
+        },
       ),
     );
   }

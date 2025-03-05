@@ -26,3 +26,9 @@ class RegistrationConfirmPasswordChanged extends RegistrationEvent {
 
   RegistrationConfirmPasswordChanged({this.value});
 }
+
+class RegistrationTickPolicyChanged extends RegistrationEvent {
+  final bool value;
+
+  RegistrationTickPolicyChanged({required this.value});
+}

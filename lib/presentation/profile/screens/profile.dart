@@ -4,6 +4,7 @@ import 'package:my_movie/core/config/dependency_injection.dart';
 import 'package:my_movie/presentation/authentication/widgets/logout_button.dart';
 import 'package:my_movie/presentation/profile/blocs/profile_bloc.dart';
 import 'package:my_movie/presentation/profile/widgets/profile_form.dart';
+import 'package:rive/rive.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -40,7 +41,7 @@ class ProfileContent extends StatelessWidget {
         child: BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
             if (state is ProfileLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return RiveAnimation.asset('assets/animation/loading.riv');
             } else if (state is ProfileLoaded) {
               return Center(
                 child: SingleChildScrollView(

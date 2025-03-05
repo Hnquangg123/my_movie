@@ -17,7 +17,6 @@ class SearchBarWidget extends StatelessWidget {
           // Close the search view after results are loaded
           if (_searchController.isOpen) {
             _searchController.closeView("");
-            FocusScope.of(context).unfocus();
           }
         }
       },

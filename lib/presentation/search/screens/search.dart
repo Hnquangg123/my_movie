@@ -7,6 +7,7 @@ import 'package:my_movie/core/util/image_url.dart';
 import 'package:my_movie/presentation/movie_detail/screens/movie_tv_detail.dart';
 import 'package:my_movie/presentation/search/blocs/search_bloc.dart';
 import 'package:my_movie/presentation/search/widgets/search_bar.dart';
+import 'package:rive/rive.dart' as rive;
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
@@ -40,7 +41,7 @@ class SearchPage extends StatelessWidget {
 
   Widget _buildBody(BuildContext context, SearchState state) {
     if (state is SearchLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return rive.RiveAnimation.asset('assets/animation/loading.riv');
     } else if (state is SearchLoaded) {
       // return ListView.builder(
       //   itemCount: state.movies['enriched_movies']?.length ?? 0,
@@ -52,6 +53,7 @@ class SearchPage extends StatelessWidget {
       //     );
       //   },
       // );
+      FocusScope.of(context).unfocus();
       final interestedMovies = state.movies['movies'] ?? [];
       final width = MediaQuery.of(context).size.width;
       final height = MediaQuery.of(context).size.height;

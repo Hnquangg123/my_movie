@@ -1,10 +1,19 @@
 part of 'recommendation_bloc.dart';
 
-sealed class RecommendationState extends Equatable {
-  const RecommendationState();
-  
-  @override
-  List<Object> get props => [];
+abstract class RecommendationState {}
+
+class RecommendationInitial extends RecommendationState {}
+
+class RecommendationLoading extends RecommendationState {}
+
+class RecommendationLoaded extends RecommendationState {
+  final List<RecommendationMovie> movies;
+
+  RecommendationLoaded({required this.movies});
 }
 
-final class RecommendationInitial extends RecommendationState {}
+class RecommendationError extends RecommendationState {
+  final String message;
+
+  RecommendationError({required this.message});
+}
