@@ -91,7 +91,8 @@ class SearchPage extends StatelessWidget {
                 scrollDirection: Axis.vertical,
                 onTap: (index) {
                   final movies = interestedMovies[index];
-                  print('Interested Movies: ${movies.title}');
+                  print('Interested Movies: $movies');
+                  print('Interested Movies: ${movies.mediaType}');
                   Navigator.push(
                     context,
                     MaterialPageRoute(

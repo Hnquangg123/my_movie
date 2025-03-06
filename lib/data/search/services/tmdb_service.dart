@@ -27,8 +27,15 @@ class TMDBService {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
+
+      // filter person
+      final filteredData = (data['results'] as List)
+          .where((movie) =>
+              movie['media_type'] == 'movie' || movie['media_type'] == 'tv')
+          .toList();
+
       // print(data);
-      final listData = (data['results'] as List).map((movie) {
+      final listData = filteredData.map((movie) {
         if (movie['media_type'] == 'movie') {
           return Movie(
             id: movie['id'] ?? 0,
@@ -36,7 +43,6 @@ class TMDBService {
             overview: movie['overview'] ?? 'No overview available',
             posterPath: movie['poster_path'] ?? '',
             releaseDate: movie['release_date'] ?? 'Unknown',
-            
           );
         } else {
           return TV(
