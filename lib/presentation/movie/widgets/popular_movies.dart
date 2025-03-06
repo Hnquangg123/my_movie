@@ -11,11 +11,7 @@ class PopularMovies extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MovieBloc, MovieState>(
       builder: (context, state) {
-        if (state is MovieLoading) {
-          return CircularProgressIndicator(
-            color: AppColors.onPrimaryColor,
-          );
-        } else if (state is MovieError) {
+        if (state is MovieError) {
           return Text(
             state.message,
             style: TextStyle(color: AppColors.surfaceColor),

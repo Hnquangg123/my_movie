@@ -18,4 +18,5 @@ class Movie {
   String toString() {
     return 'Movie{id: $id, title: $title, overview: $overview, posterPath: $posterPath, releaseDate: $releaseDate}';
   }
+  
 }

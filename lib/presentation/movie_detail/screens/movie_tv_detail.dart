@@ -7,6 +7,7 @@ import 'package:my_movie/presentation/movie_detail/blocs/movie_detail/movie_deta
 import 'package:my_movie/presentation/movie_detail/blocs/tv_detail/tv_detail_bloc.dart';
 import 'package:my_movie/presentation/movie_detail/blocs/video/video_bloc.dart';
 import 'package:my_movie/presentation/movie_detail/widgets/detail.dart';
+import 'package:rive/rive.dart';
 
 class MovieTVDetail extends StatelessWidget {
   final int movieTVId;
@@ -45,24 +46,57 @@ class MovieTVDetail extends StatelessWidget {
           },
         ),
       ],
-      child: Scaffold(
-        body: Stack(children: [
-          Detail(mediaType: mediaType),
-          Positioned(
-            top: 25, // Adjust the position as needed
-            left: 16,
-            child: CircleAvatar(
-              backgroundColor: AppColors.surfaceColor,
-              child: IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
+      child: mediaType == 'movie'
+          ? BlocBuilder<MovieDetailBloc, MovieDetailState>(
+              builder: (context, state) {
+                return state is MovieDetailLoading
+                    ? RiveAnimation.asset('assets/animation/loading.riv')
+                    : Scaffold(
+                        body: Stack(children: [
+                          Detail(mediaType: mediaType),
+                          Positioned(
+                            top: 25, // Adjust the position as needed
+                            left: 16,
+                            child: CircleAvatar(
+                              backgroundColor: AppColors.surfaceColor,
+                              child: IconButton(
+                                icon:
+                                    Icon(Icons.arrow_back, color: Colors.white),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ),
+                          ),
+                        ]),
+                      );
+              },
+            )
+          : BlocBuilder<TvDetailBloc, TvDetailState>(
+              builder: (context, state) {
+                return state is TvDetailLoading
+                    ? RiveAnimation.asset('assets/animation/loading.riv')
+                    : Scaffold(
+                        body: Stack(children: [
+                          Detail(mediaType: mediaType),
+                          Positioned(
+                            top: 25, // Adjust the position as needed
+                            left: 16,
+                            child: CircleAvatar(
+                              backgroundColor: AppColors.surfaceColor,
+                              child: IconButton(
+                                icon:
+                                    Icon(Icons.arrow_back, color: Colors.white),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ),
+                          ),
+                        ]),
+                      );
+              },
             ),
-          ),
-        ]),
-      ),
     );
   }
 }

@@ -31,6 +31,12 @@ import 'package:my_movie/data/movie_detail/services/fetch_video_service.dart'
     as _i418;
 import 'package:my_movie/data/profile/repositories/profile_repository.dart'
     as _i733;
+import 'package:my_movie/data/recommendation/repositories/recommendation_repository.dart'
+    as _i153;
+import 'package:my_movie/data/recommendation/services/open_ai_service.dart'
+    as _i546;
+import 'package:my_movie/data/recommendation/services/recommendation_service.dart'
+    as _i647;
 import 'package:my_movie/data/search/repositories/search_repository.dart'
     as _i823;
 import 'package:my_movie/data/search/services/open_ai_service.dart' as _i355;
@@ -48,6 +54,8 @@ import 'package:my_movie/domain/movie_detail/repositories/i_video_repository.dar
     as _i751;
 import 'package:my_movie/domain/profile/repositories/i_profile_repository.dart'
     as _i390;
+import 'package:my_movie/domain/recommendation/repositories/i_recommendation_repository.dart'
+    as _i463;
 import 'package:my_movie/domain/search/repositories/i_search_repository.dart'
     as _i96;
 import 'package:my_movie/presentation/authentication/blocs/auth/auth_bloc.dart'
@@ -63,6 +71,8 @@ import 'package:my_movie/presentation/movie_detail/blocs/tv_detail/tv_detail_blo
 import 'package:my_movie/presentation/movie_detail/blocs/video/video_bloc.dart'
     as _i127;
 import 'package:my_movie/presentation/profile/blocs/profile_bloc.dart' as _i294;
+import 'package:my_movie/presentation/recommendation/blocs/recommendation_bloc.dart'
+    as _i140;
 import 'package:my_movie/presentation/registration/blocs/registration_bloc.dart'
     as _i280;
 import 'package:my_movie/presentation/search/blocs/search_bloc.dart' as _i402;
@@ -88,6 +98,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i402.SupabaseService(gh<_i454.SupabaseClient>()));
     gh.singleton<_i471.FetchMovieService>(
         () => _i471.FetchMovieService(client: gh<_i519.Client>()));
+    gh.singleton<_i546.OpenAIService>(
+        () => _i546.OpenAIService(client: gh<_i519.Client>()));
     gh.singleton<_i355.OpenAIService>(
         () => _i355.OpenAIService(client: gh<_i519.Client>()));
     gh.lazySingleton<_i924.FetchMovieDetailService>(
@@ -106,6 +118,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i249.AuthenticationRepository(gh<_i454.GoTrueClient>()));
     gh.factory<_i1044.IMovieRepository>(() => _i725.MovieRepository(
         fetchMovieService: gh<_i471.FetchMovieService>()));
+    gh.singleton<_i647.RecommendationService>(() => _i647.RecommendationService(
+          gh<_i454.SupabaseClient>(),
+          gh<_i546.OpenAIService>(),
+        ));
     gh.factory<_i96.ISearchRepository>(() => _i823.SearchRepository(
           tmdbService: gh<_i859.TMDBService>(),
           openAIService: gh<_i355.OpenAIService>(),
@@ -129,10 +145,14 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i942.LoginBloc(gh<_i437.IAuthenticationRepository>()));
     gh.factory<_i280.RegistrationBloc>(
         () => _i280.RegistrationBloc(gh<_i437.IAuthenticationRepository>()));
+    gh.factory<_i463.IRecommendationRepository>(() =>
+        _i153.RecommendationRepository(gh<_i647.RecommendationService>()));
     gh.factory<_i127.VideoBloc>(
         () => _i127.VideoBloc(gh<_i751.IVideoRepository>()));
     gh.factory<_i890.MovieDetailBloc>(
         () => _i890.MovieDetailBloc(gh<_i372.IMovieDetailRepository>()));
+    gh.factory<_i140.RecommendationBloc>(
+        () => _i140.RecommendationBloc(gh<_i463.IRecommendationRepository>()));
     return this;
   }
 }

@@ -51,7 +51,7 @@ class AuthenticationRepository implements IAuthenticationRepository {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn(
         serverClientId: webClientId,
-      );
+      );  
 
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       // Handle case where user cancels sign-in
